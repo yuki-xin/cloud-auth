@@ -2,7 +2,6 @@ package xin.yuki.auth.server.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
-import org.springframework.boot.autoconfigure.security.oauth2.OAuth2ClientProperties;
 import org.springframework.boot.autoconfigure.security.oauth2.authserver.AuthorizationServerProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationContext;
@@ -33,16 +32,14 @@ import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.util.Assert;
-import org.springframework.util.StringUtils;
 import xin.yuki.auth.core.config.ClientConfiguration;
-import xin.yuki.auth.core.config.JpaConfiguration;
+import xin.yuki.auth.core.config.CoreConfiguration;
 import xin.yuki.auth.core.service.ClientService;
 import xin.yuki.auth.server.service.impl.DynamicTokenEndpoint;
 import xin.yuki.auth.server.service.impl.DynamicTokenGranter;
 
 import javax.sql.DataSource;
 import java.util.Collections;
-import java.util.HashMap;
 
 /**
  * @Title AuthorizationSecurityConfig
@@ -53,14 +50,13 @@ import java.util.HashMap;
 @Configuration
 @EnableAuthorizationServer
 @EnableConfigurationProperties(AuthorizationServerProperties.class)
-@Import({ClientConfiguration.class, JpaConfiguration.class})
+@Import({ClientConfiguration.class, CoreConfiguration.class})
 public class AuthorizationSecurityConfiguration extends AuthorizationServerConfigurerAdapter {
 
-	private static final String DEFAULT_CLIENT = "client";
-	private static final String DEFAULT_AUTH_CLIENT = "auth-server";
+	private static final String DEFAULT_FRONT_CLIENT = "auth-front";
+	private static final String DEFAULT_AUTH_MANAGER_CLIENT = "auth-manager";
 	private final AuthenticationManager authenticationManager;
 	private final PasswordEncoder passwordEncoder;
-	private final OAuth2ClientProperties oAuth2ClientProperties;
 	private final AuthorizationServerProperties authorizationServerProperties;
 	private final DataSource dataSource;
 	private final ClientDetailsService clientDetailsService;
@@ -68,14 +64,12 @@ public class AuthorizationSecurityConfiguration extends AuthorizationServerConfi
 
 	@Autowired
 	public AuthorizationSecurityConfiguration(final AuthenticationConfiguration authenticationConfiguration,
-	                                          final OAuth2ClientProperties oAuth2ClientProperties,
 	                                          final DataSource dataSource,
 	                                          final PasswordEncoder passwordEncoder,
 	                                          final AuthorizationServerProperties authorizationServerProperties,
 	                                          final ClientDetailsService clientDetailsService,
 	                                          final ClientService clientService) throws Exception {
 		this.authenticationManager = authenticationConfiguration.getAuthenticationManager();
-		this.oAuth2ClientProperties = oAuth2ClientProperties;
 		this.passwordEncoder = passwordEncoder;
 		this.dataSource = dataSource;
 		this.authorizationServerProperties = authorizationServerProperties;
@@ -87,45 +81,39 @@ public class AuthorizationSecurityConfiguration extends AuthorizationServerConfi
 	@Override
 	public void configure(final ClientDetailsServiceConfigurer clients) throws Exception {
 		//对ClientDetails的配置
-		super.configure(clients);
 		final JdbcClientDetailsServiceBuilder builder =
 				clients.jdbc(this.dataSource).passwordEncoder(this.passwordEncoder);
 
 
-		final String client = StringUtils.isEmpty(this.oAuth2ClientProperties.getClientId()) ? DEFAULT_CLIENT :
-				this.oAuth2ClientProperties.getClientSecret();
-		final HashMap<String, Object> additionalInformation = new HashMap<>(1);
-		additionalInformation.put("tokenType", "default");
-		if (!this.clientService.clientExists(client)) {
-			builder.withClient(client).secret(client)
+		//添加auth-front
+		if (!this.clientService.clientExists(DEFAULT_FRONT_CLIENT)) {
+			builder.withClient(DEFAULT_FRONT_CLIENT).secret(DEFAULT_FRONT_CLIENT)
 					.scopes("all")
-					.authorizedGrantTypes("password,authorization_code,refresh_token,implicit".split(","))
+					.authorizedGrantTypes("password,client_credentials".split(","))
 					//两个小时有效
 					.accessTokenValiditySeconds(7200)
 					//一个月有效期
-					.refreshTokenValiditySeconds(2592000)
-					//Token 类型
-					.additionalInformation(additionalInformation);
+					.refreshTokenValiditySeconds(2592000);
 		}
 
-		//自己也是一个ResourceServer 添加自己
-		if (!this.clientService.clientExists(DEFAULT_AUTH_CLIENT)) {
-			builder.withClient(DEFAULT_AUTH_CLIENT).secret(DEFAULT_AUTH_CLIENT)
+		//添加auth-manager
+		if (!this.clientService.clientExists(DEFAULT_AUTH_MANAGER_CLIENT)) {
+			builder.withClient(DEFAULT_AUTH_MANAGER_CLIENT).secret(DEFAULT_AUTH_MANAGER_CLIENT)
 					.scopes("all")
-					.authorizedGrantTypes("client_credentials".split(","))
+					.authorizedGrantTypes("client_credentials")
 					//两个小时有效
 					.accessTokenValiditySeconds(7200)
 					//一个月有效期
-					.refreshTokenValiditySeconds(2592000)
-					//Token 类型
-					.additionalInformation(additionalInformation);
+					.refreshTokenValiditySeconds(2592000);
 		}
+//		builder.build();
 	}
 
 
 	@Override
 	public void configure(final AuthorizationServerEndpointsConfigurer endpoints) {
 		endpoints.authenticationManager(this.authenticationManager);
+		endpoints.tokenServices(this.jdbcTokenService());
 	}
 
 	@Override

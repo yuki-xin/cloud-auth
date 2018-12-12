@@ -18,7 +18,7 @@ import javax.persistence.Table;
 @Data
 @Entity
 @Table(name = "permissions", indexes = @Index(name = "name_idx", columnList = "name", unique = true))
-class PermissionEntity extends BaseEntity implements GrantedAuthority {
+public class PermissionEntity extends BaseEntity implements GrantedAuthority {
 
 	private static final long serialVersionUID = -812812513295029240L;
 

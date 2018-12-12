@@ -18,12 +18,21 @@ import java.util.Set;
 public class RoleEntity extends BaseEntity {
 
 	private static final long serialVersionUID = 221289698284488072L;
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "roles")
-	private final Set<UserEntity> users = new HashSet<>();
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "roles")
-	private final Set<UserGroupEntity> groups = new HashSet<>();
+
+
 	private String name;
 	private String description;
+
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Set<PermissionEntity> permissions;
+	private Set<PermissionEntity> permissions = new HashSet<>();
+
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "roles")
+	private final Set<UserEntity> users = new HashSet<>();
+
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "roles")
+	private final Set<UserGroupEntity> groups = new HashSet<>();
+
+	public void addPermission(final PermissionEntity permission) {
+		this.permissions.add(permission);
+	}
 }

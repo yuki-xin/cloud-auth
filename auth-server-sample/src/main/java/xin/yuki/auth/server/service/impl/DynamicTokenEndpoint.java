@@ -103,7 +103,7 @@ public class DynamicTokenEndpoint extends TokenEndpoint {
 		headers.set("Cache-Control", "no-store");
 		headers.set("Pragma", "no-cache");
 		headers.set("Content-Type", "application/json;charset=UTF-8");
-		return new ResponseEntity(accessToken, headers, HttpStatus.OK);
+		return new ResponseEntity<>(accessToken, headers, HttpStatus.OK);
 	}
 
 	private boolean isRefreshTokenRequest(final Map<String, String> parameters) {

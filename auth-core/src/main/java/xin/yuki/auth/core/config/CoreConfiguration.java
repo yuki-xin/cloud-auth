@@ -10,5 +10,5 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories(basePackages = "xin.yuki.auth.core")
 @EntityScan(basePackages = "xin.yuki.auth.core")
 @Configuration
-public class JpaConfiguration {
+public class CoreConfiguration {
 }

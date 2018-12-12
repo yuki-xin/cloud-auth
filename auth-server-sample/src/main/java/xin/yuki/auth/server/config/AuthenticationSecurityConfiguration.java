@@ -16,11 +16,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.util.StringUtils;
 import xin.yuki.auth.core.config.UserConfiguration;
+import xin.yuki.auth.core.entity.PermissionEntity;
 import xin.yuki.auth.core.entity.RoleEntity;
 import xin.yuki.auth.core.entity.UserEntity;
 import xin.yuki.auth.core.entity.UserGroupEntity;
 import xin.yuki.auth.core.repository.UserRepository;
-import xin.yuki.auth.server.service.impl.UserDetailsServiceImpl;
+import xin.yuki.auth.core.service.impl.UserDetailsServiceImpl;
 
 /**
  * @Title AuthorizationSecurityConfig
@@ -48,7 +49,7 @@ public class AuthenticationSecurityConfiguration extends WebSecurityConfigurerAd
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-				.antMatchers("/h2-console/**", "/error").permitAll()
+				.antMatchers("/error").permitAll()
 				.anyRequest().authenticated()
 				.and()
 				.formLogin().defaultSuccessUrl("/")
@@ -98,6 +99,11 @@ public class AuthenticationSecurityConfiguration extends WebSecurityConfigurerAd
 			//保存默认用户
 			final UserEntity userDetails = new UserEntity(1L, username, password, true);
 			userDetails.addUserGroup(userGroup);
+
+			final PermissionEntity permission = new PermissionEntity();
+			permission.setName("admin");
+			permission.setId(1L);
+			role.addPermission(permission);
 
 			userDetailsService.createUser(userDetails);
 

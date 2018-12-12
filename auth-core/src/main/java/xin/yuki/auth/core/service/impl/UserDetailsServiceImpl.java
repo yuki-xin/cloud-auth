@@ -1,4 +1,4 @@
-package xin.yuki.auth.server.service.impl;
+package xin.yuki.auth.core.service.impl;
 
 
 import lombok.extern.slf4j.Slf4j;
