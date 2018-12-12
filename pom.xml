@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>xin.yuki</groupId>
+    <artifactId>cloud-auth-spring-boot</artifactId>
+
+    <name>cloud-auth-spring-boot</name>
+    <description>a spring boot starter for cloud auth</description>
+    <url>https://github.com/xin-yuki/cloud-auth</url>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>auth-core</module>
+        <module>auth-server-sample</module>
+        <module>auth-client-sample</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <spring-boot.version>2.1.1.RELEASE</spring-boot.version>
+        <commons-collection4.version>4.1</commons-collection4.version>
+        <commons-lang3.version>3.4</commons-lang3.version>
+        <hibernate-types.version>2.3.5</hibernate-types.version>
+        <fastjson.version>1.2.49</fastjson.version>
+    </properties>
+
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>sonatype-nexus-snapshots</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>sonatype-nexus-staging</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security.oauth.boot</groupId>
+                <artifactId>spring-security-oauth2-autoconfigure</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>${commons-collection4.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons-lang3.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.vladmihalcea</groupId>
+            <artifactId>hibernate-types-52</artifactId>
+            <version>${hibernate-types.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>sonatype-release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>2.4</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>2.10.2</version>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.6</version>
+                        <executions>
+                            <execution>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <version>1.6.7</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <serverId>sonatype-nexus-staging</serverId>
+                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <scm>
+        <url>https://github.com/yuki-xin/cloud-auth</url>
+        <connection>https://github.com/yuki-xin/cloud-auth.git</connection>
+        <developerConnection>https://github.com/yuki-xin</developerConnection>
+    </scm>
+    <developers>
+        <developer>
+            <name>ZQian</name>
+            <email>604922962@qq.com</email>
+            <url>https://github.com/yuki-xin</url>
+        </developer>
+    </developers>
+
+</project>
