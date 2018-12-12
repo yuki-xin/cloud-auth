@@ -1,4 +1,4 @@
-package xin.yuki.auth.core;
+package xin.yuki.auth.manager;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

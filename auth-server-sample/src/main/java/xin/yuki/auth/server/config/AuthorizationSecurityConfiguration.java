@@ -8,6 +8,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -33,6 +34,8 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
+import xin.yuki.auth.core.config.ClientConfiguration;
+import xin.yuki.auth.core.config.JpaConfiguration;
 import xin.yuki.auth.core.service.ClientService;
 import xin.yuki.auth.server.service.impl.DynamicTokenEndpoint;
 import xin.yuki.auth.server.service.impl.DynamicTokenGranter;
@@ -50,6 +53,7 @@ import java.util.HashMap;
 @Configuration
 @EnableAuthorizationServer
 @EnableConfigurationProperties(AuthorizationServerProperties.class)
+@Import({ClientConfiguration.class, JpaConfiguration.class})
 public class AuthorizationSecurityConfiguration extends AuthorizationServerConfigurerAdapter {
 
 	private static final String DEFAULT_CLIENT = "client";
@@ -178,8 +182,9 @@ public class AuthorizationSecurityConfiguration extends AuthorizationServerConfi
 
 	@Bean
 	@Primary
-	public DynamicTokenEndpoint tokenEndpoint(final ApplicationContext applicationContext){
-		final DefaultListableBeanFactory autowireCapableBeanFactory = (DefaultListableBeanFactory) applicationContext.getAutowireCapableBeanFactory();
+	public DynamicTokenEndpoint tokenEndpoint(final ApplicationContext applicationContext) {
+		final DefaultListableBeanFactory autowireCapableBeanFactory =
+				(DefaultListableBeanFactory) applicationContext.getAutowireCapableBeanFactory();
 		autowireCapableBeanFactory.removeBeanDefinition("tokenEndpoint");
 		final DynamicTokenEndpoint dynamicTokenEndpoint = new DynamicTokenEndpoint();
 		dynamicTokenEndpoint.setClientDetailsService(this.clientDetailsService);
@@ -196,7 +201,7 @@ public class AuthorizationSecurityConfiguration extends AuthorizationServerConfi
 	}
 
 	@Bean
-	public AuthorizationCodeServices authorizationCodeServices(){
+	public AuthorizationCodeServices authorizationCodeServices() {
 		return new JdbcAuthorizationCodeServices(this.dataSource);
 	}
 

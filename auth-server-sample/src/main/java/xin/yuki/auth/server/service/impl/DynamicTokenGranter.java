@@ -65,7 +65,7 @@ public class DynamicTokenGranter extends CompositeTokenGranter {
 				if (StringUtils.isNotEmpty(tokenType) && DynamicTokenGranter.JWT_TOKEN.equals(tokenType)) {
 					return DynamicTokenGranter.this.jwtTokenService.createAccessToken(this.getOAuth2Authentication(client, tokenRequest));
 				} else {
-					return DynamicTokenGranter.this.jdbcTokenService.getAccessToken(this.getOAuth2Authentication(client, tokenRequest));
+					return DynamicTokenGranter.this.jdbcTokenService.createAccessToken(this.getOAuth2Authentication(client, tokenRequest));
 				}
 			}
 		};
@@ -78,7 +78,7 @@ public class DynamicTokenGranter extends CompositeTokenGranter {
 				if (StringUtils.isNotEmpty(tokenType) && DynamicTokenGranter.JWT_TOKEN.equals(tokenType)) {
 					return DynamicTokenGranter.this.jwtTokenService.createAccessToken(this.getOAuth2Authentication(client, tokenRequest));
 				} else {
-					return DynamicTokenGranter.this.jdbcTokenService.getAccessToken(this.getOAuth2Authentication(client, tokenRequest));
+					return DynamicTokenGranter.this.jdbcTokenService.createAccessToken(this.getOAuth2Authentication(client, tokenRequest));
 				}
 			}
 		};
@@ -91,7 +91,7 @@ public class DynamicTokenGranter extends CompositeTokenGranter {
 				if (StringUtils.isNotEmpty(tokenType) && DynamicTokenGranter.JWT_TOKEN.equals(tokenType)) {
 					return DynamicTokenGranter.this.jwtTokenService.createAccessToken(this.getOAuth2Authentication(client, tokenRequest));
 				} else {
-					return DynamicTokenGranter.this.jdbcTokenService.getAccessToken(this.getOAuth2Authentication(client, tokenRequest));
+					return DynamicTokenGranter.this.jdbcTokenService.createAccessToken(this.getOAuth2Authentication(client, tokenRequest));
 				}
 			}
 		};
@@ -104,7 +104,7 @@ public class DynamicTokenGranter extends CompositeTokenGranter {
 				if (StringUtils.isNotEmpty(tokenType) && DynamicTokenGranter.JWT_TOKEN.equals(tokenType)) {
 					return DynamicTokenGranter.this.jwtTokenService.createAccessToken(this.getOAuth2Authentication(client, tokenRequest));
 				} else {
-					return DynamicTokenGranter.this.jdbcTokenService.getAccessToken(this.getOAuth2Authentication(client, tokenRequest));
+					return DynamicTokenGranter.this.jdbcTokenService.createAccessToken(this.getOAuth2Authentication(client, tokenRequest));
 				}
 			}
 		};
@@ -121,7 +121,7 @@ public class DynamicTokenGranter extends CompositeTokenGranter {
 							if (StringUtils.isNotEmpty(tokenType) && DynamicTokenGranter.JWT_TOKEN.equals(tokenType)) {
 								return DynamicTokenGranter.this.jwtTokenService.createAccessToken(this.getOAuth2Authentication(client, tokenRequest));
 							} else {
-								return DynamicTokenGranter.this.jdbcTokenService.getAccessToken(this.getOAuth2Authentication(client, tokenRequest));
+								return DynamicTokenGranter.this.jdbcTokenService.createAccessToken(this.getOAuth2Authentication(client, tokenRequest));
 							}
 						}
 					};
