@@ -15,7 +15,7 @@
     <modules>
         <module>auth-core</module>
         <module>auth-server-sample</module>
-        <module>auth-client-sample</module>
+        <module>auth-manager-sample</module>
     </modules>
 
     <properties>
