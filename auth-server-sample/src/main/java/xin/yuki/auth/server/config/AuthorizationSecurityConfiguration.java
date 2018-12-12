@@ -33,9 +33,9 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
-import xin.yuki.auth.manager.service.ClientService;
-import xin.yuki.auth.manager.service.impl.DynamicTokenEndpoint;
-import xin.yuki.auth.manager.service.impl.DynamicTokenGranter;
+import xin.yuki.auth.core.service.ClientService;
+import xin.yuki.auth.server.service.impl.DynamicTokenEndpoint;
+import xin.yuki.auth.server.service.impl.DynamicTokenGranter;
 
 import javax.sql.DataSource;
 import java.util.Collections;

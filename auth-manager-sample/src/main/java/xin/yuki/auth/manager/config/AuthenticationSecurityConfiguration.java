@@ -14,11 +14,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.util.StringUtils;
-import xin.yuki.auth.manager.entity.RoleEntity;
-import xin.yuki.auth.manager.entity.UserEntity;
-import xin.yuki.auth.manager.entity.UserGroupEntity;
-import xin.yuki.auth.manager.repository.UserRepository;
-import xin.yuki.auth.service.impl.UserDetailsServiceImpl;
+import xin.yuki.auth.core.entity.RoleEntity;
+import xin.yuki.auth.core.entity.UserEntity;
+import xin.yuki.auth.core.entity.UserGroupEntity;
+import xin.yuki.auth.core.repository.UserRepository;
 
 /**
  * @Title AuthorizationSecurityConfig

@@ -11,8 +11,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
-import xin.yuki.auth.manager.entity.UserEntity;
-import xin.yuki.auth.manager.repository.UserRepository;
+import xin.yuki.auth.core.entity.UserEntity;
+import xin.yuki.auth.core.repository.UserRepository;
 
 @Slf4j
 public class UserDetailsServiceImpl implements UserDetailsManager {
