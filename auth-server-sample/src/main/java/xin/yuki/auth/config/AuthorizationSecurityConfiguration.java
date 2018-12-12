@@ -197,13 +197,13 @@ public class AuthorizationSecurityConfiguration extends AuthorizationServerConfi
 
 	@Bean
 	public AuthorizationCodeServices authorizationCodeServices(){
-		return new JdbcAuthorizationCodeServices(dataSource);
+		return new JdbcAuthorizationCodeServices(this.dataSource);
 	}
 
 	@Bean
 	public TokenGranter dynamicTokenGranter() {
-		return new DynamicTokenGranter(clientDetailsService,jwtTokenService(),jdbcTokenService(),
-				authorizationCodeServices(),authenticationManager);
+		return new DynamicTokenGranter(this.clientDetailsService, this.jwtTokenService(), this.jdbcTokenService(),
+				this.authorizationCodeServices(), this.authenticationManager);
 	}
 }
 

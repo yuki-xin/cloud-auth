@@ -1,0 +1,48 @@
+server:
+  port: 8081
+  error:
+    whitelabel:
+      enabled: false
+
+
+spring:
+  datasource:
+    hikari:
+      minimum-idle: 2
+      maximum-pool-size: 20
+      pool-name: HikariCP
+      connection-test-query: select 1
+      idle-timeout: 30000
+      connection-timeout: 60000
+#    url: jdbc:h2:file:./server-sample/db/main
+    url: jdbc:mysql://localhost:3306/server-sample?useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
+    password: 567711
+
+  main:
+    web-application-type: servlet
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+    generate-ddl: true
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL57Dialect
+
+  security:
+    user:
+      name: admin
+      password: admin
+
+
+security:
+  oauth2:
+    resource:
+      token-info-uri: http://127.0.0.1:${server.port}/oauth/check_token
+    #      user-info-uri: auth-server
+    client:
+      client-id: auth-server
+      client-secret: auth-server
