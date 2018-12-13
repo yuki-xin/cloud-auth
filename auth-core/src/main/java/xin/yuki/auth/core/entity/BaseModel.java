@@ -15,6 +15,6 @@ class BaseModel implements Serializable {
 	private Long id;
 
 	@Version
-	private Integer version;
+	private Long version;
 
 }

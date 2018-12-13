@@ -18,7 +18,6 @@ public class OauthClientTokenModel implements Serializable {
 	@Id
 	private String tokenId;
 
-	@Lob
 	private byte[] token;
 
 	private String authenticationId;

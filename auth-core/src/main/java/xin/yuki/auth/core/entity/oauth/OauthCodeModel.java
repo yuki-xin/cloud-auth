@@ -18,7 +18,6 @@ public class OauthCodeModel implements Serializable {
 	@Id
 	private String code;
 
-	@Lob
 	private byte[] authentication;
 
 }

@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * @author zhang
  */
-@EqualsAndHashCode(callSuper = true, exclude = {"users", "groups"})
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Table(name = "roles")
 public class RoleModel extends BaseModel {
@@ -22,12 +22,12 @@ public class RoleModel extends BaseModel {
 	 * 查询用的用户
 	 */
 	@Transient
-	private final List<UserModel> users = new ArrayList<>();
+	private List<UserModel> users = new ArrayList<>();
 	/**
 	 * 查询用的组
 	 */
 	@Transient
-	private final List<GroupModel> groups = new ArrayList<>();
+	private List<GroupModel> groups = new ArrayList<>();
 	private String name;
 	private String description;
 	/**

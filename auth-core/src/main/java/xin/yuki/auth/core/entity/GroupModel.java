@@ -31,6 +31,7 @@ public class GroupModel extends BaseModel {
 	private final List<GroupRoleRel> groupRole = new ArrayList<>();
 
 	private String name;
+	private String description;
 
 	public void addRole(final RoleModel role) {
 		this.roles.add(role);
