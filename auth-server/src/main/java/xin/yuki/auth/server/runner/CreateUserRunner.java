@@ -1,37 +1,35 @@
 package xin.yuki.auth.server.runner;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.security.provisioning.UserDetailsManager;
-import org.springframework.stereotype.Component;
 import xin.yuki.auth.core.entity.GroupModel;
 import xin.yuki.auth.core.entity.PermissionModel;
 import xin.yuki.auth.core.entity.RoleModel;
 import xin.yuki.auth.core.entity.UserModel;
 
-@Component
 public class CreateUserRunner implements CommandLineRunner {
 
 	private static final String DEFAULT_USER = "admin";
 
 
-	@Autowired
-	@Qualifier("userDetailsService")
-	private UserDetailsManager userDetailsService;
+	public CreateUserRunner(final UserDetailsManager userDetailsService, final SecurityProperties securityProperties) {
+		this.userDetailsService = userDetailsService;
+		this.securityProperties = securityProperties;
+	}
 
-	@Autowired
-	private SecurityProperties securityProperties;
+	private final UserDetailsManager userDetailsService;
+
+	private final SecurityProperties securityProperties;
 
 	@Override
-	public void run(String... args) {
-		final String username = StringUtils.isEmpty(securityProperties.getUser().getName()) ? DEFAULT_USER :
-				securityProperties.getUser().getName();
-		final String password = StringUtils.isEmpty(securityProperties.getUser().getName()) ? DEFAULT_USER :
-				securityProperties.getUser().getName();
-		if (!userDetailsService.userExists(username)) {
+	public void run(final String... args) {
+		final String username = StringUtils.isEmpty(this.securityProperties.getUser().getName()) ? DEFAULT_USER :
+				this.securityProperties.getUser().getName();
+		final String password = StringUtils.isEmpty(this.securityProperties.getUser().getName()) ? DEFAULT_USER :
+				this.securityProperties.getUser().getName();
+		if (!this.userDetailsService.userExists(username)) {
 			//创建默认用户组和角色
 			final RoleModel role = new RoleModel();
 			role.setId(1L);
@@ -51,7 +49,7 @@ public class CreateUserRunner implements CommandLineRunner {
 			permission.setId(1L);
 			role.addPermission(permission);
 
-			userDetailsService.createUser(userDetails);
+			this.userDetailsService.createUser(userDetails);
 
 		}
 	}

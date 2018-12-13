@@ -29,8 +29,7 @@ security:
     resource:
       token-info-uri: http://127.0.0.1:8080/oauth/check_token
       jwt:
-        #        key-uri: http://127.0.0.1:8080/oauth/token_key
-        key-value: 123
+        key-uri: http://127.0.0.1:8080/oauth/token_key
     client:
       client-id: auth-manager
       client-secret: auth-manager

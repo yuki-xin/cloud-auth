@@ -1,6 +1,7 @@
 package xin.yuki.auth.server.config;
 
 
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,6 +16,7 @@ import org.springframework.security.provisioning.UserDetailsManager;
 import xin.yuki.auth.core.mapper.*;
 import xin.yuki.auth.core.service.UserService;
 import xin.yuki.auth.core.service.impl.UserServiceImpl;
+import xin.yuki.auth.server.runner.CreateUserRunner;
 
 /**
  * @Title AuthorizationSecurityConfig
@@ -25,7 +27,6 @@ import xin.yuki.auth.core.service.impl.UserServiceImpl;
 @Configuration
 @EnableWebSecurity
 public class AuthenticationSecurityConfiguration extends WebSecurityConfigurerAdapter {
-
 
 
 	@Bean
@@ -76,5 +77,11 @@ public class AuthenticationSecurityConfiguration extends WebSecurityConfigurerAd
 		return userDetailsService;
 	}
 
+
+	@Bean
+	public CreateUserRunner createUserRunner(final UserDetailsManager userDetailsService,
+	                                         final SecurityProperties securityProperties) {
+		return new CreateUserRunner(userDetailsService, securityProperties);
+	}
 
 }

@@ -8,7 +8,7 @@ import tk.mybatis.spring.annotation.MapperScan;
  * @author zhang
  */
 @MapperScan(basePackages = "xin.yuki.auth.core.mapper")
-@PropertySource("mybatis.properties")
+@PropertySource("auth-core.properties")
 @Configuration
 public class CoreConfiguration {
 
