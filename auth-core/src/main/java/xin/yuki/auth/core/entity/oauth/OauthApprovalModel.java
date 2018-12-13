@@ -3,16 +3,14 @@ package xin.yuki.auth.core.entity.oauth;
 import lombok.Data;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
 
 @Data
-@Entity
 @Table(name = "oauth_approvals")
-public class OauthApproval implements Serializable {
+public class OauthApprovalModel implements Serializable {
 
 	private static final long serialVersionUID = -1007648892846148457L;
 	@Id

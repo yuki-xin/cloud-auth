@@ -2,9 +2,9 @@ package xin.yuki.auth.core.entity;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.hibernate.annotations.Type;
 
-import javax.persistence.*;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -17,15 +17,11 @@ import java.util.Map;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@Entity
-@Table(name = "routers", indexes = {@Index(name = "name_idx", unique = true, columnList = "name")})
-public class RouterEntity extends BaseEntity {
+@Table(name = "routers")
+public class RouterModel extends BaseModel {
 
 	private static final long serialVersionUID = 3648916970723972562L;
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "parent")
-	private final List<RouterEntity> children = new ArrayList<>();
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private RouterEntity parent;
+
 	private Boolean hidden;
 	private Boolean alwaysShow;
 	private String redirect;
@@ -33,11 +29,15 @@ public class RouterEntity extends BaseEntity {
 	private String path;
 	private String component;
 
-	@Type(type = "json")
-	@Column(columnDefinition = "json")
 	private Map<String, Object> meta;
 
-	public void addChildren(final RouterEntity router) {
+	@Transient
+	private final List<RouterModel> children = new ArrayList<>();
+
+	@Transient
+	private RouterModel parent;
+
+	public void addChildren(final RouterModel router) {
 		this.children.add(router);
 	}
 }

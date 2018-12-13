@@ -21,21 +21,16 @@ spring:
 
   main:
     web-application-type: servlet
+    allow-bean-definition-overriding: true
 
-  jpa:
-    hibernate:
-      ddl-auto: update
-      naming:
-        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
-        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
-    generate-ddl: true
-    show-sql: true
-    database-platform: org.hibernate.dialect.MySQL57Dialect
 
 security:
   oauth2:
     resource:
       token-info-uri: http://127.0.0.1:8080/oauth/check_token
+      jwt:
+        #        key-uri: http://127.0.0.1:8080/oauth/token_key
+        key-value: 123
     client:
       client-id: auth-manager
       client-secret: auth-manager

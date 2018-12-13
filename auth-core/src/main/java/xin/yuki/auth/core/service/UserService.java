@@ -1,4 +1,6 @@
 package xin.yuki.auth.core.service;
 
-public interface UserService {
+import org.springframework.security.provisioning.UserDetailsManager;
+
+public interface UserService extends UserDetailsManager {
 }

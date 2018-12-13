@@ -1,19 +1,16 @@
-package xin.yuki.auth.server.config;
+package xin.yuki.auth.manager.config;
 
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
 import xin.yuki.auth.core.mapper.*;
-import xin.yuki.auth.core.service.UserService;
 import xin.yuki.auth.core.service.impl.UserServiceImpl;
 
 /**
@@ -27,7 +24,6 @@ import xin.yuki.auth.core.service.impl.UserServiceImpl;
 public class AuthenticationSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 
-
 	@Bean
 	protected static PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -37,23 +33,12 @@ public class AuthenticationSecurityConfiguration extends WebSecurityConfigurerAd
 	protected void configure(final HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 				.antMatchers("/error").permitAll()
+				.antMatchers("/test").hasAnyAuthority("admin")
 				.anyRequest().authenticated()
-				.and()
-				.formLogin().defaultSuccessUrl("/")
 				.and()
 				.headers().frameOptions().disable()
 				.and()
 				.csrf().disable();
-	}
-
-	@Override
-	public void configure(final WebSecurity web) throws Exception {
-		super.configure(web);
-	}
-
-	@Override
-	protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-		super.configure(auth);
 	}
 
 	@Override
@@ -62,19 +47,16 @@ public class AuthenticationSecurityConfiguration extends WebSecurityConfigurerAd
 		return super.authenticationManager();
 	}
 
-
 	@Bean
-	public UserDetailsManager userDetailsService(final PasswordEncoder passwordEncoder,
-	                                             final UserDao userDao,
-	                                             final GroupDao groupDao, final UserGroupDao userGroupDao,
-	                                             final UserRoleDao userRoleDao, final GroupRoleDao groupRoleDao,
-	                                             final RoleDao roleDao, final PermissionDao permissionDao,
-	                                             final RolePermissionDao rolePermissionDao) throws Exception {
-		final UserService userDetailsService = new UserServiceImpl(this.authenticationManager(),
-				passwordEncoder, userDao, groupDao, userGroupDao, userRoleDao, groupRoleDao, roleDao, permissionDao,
-				rolePermissionDao);
-		return userDetailsService;
+	public UserDetailsManager userDetailsService(final AuthenticationManager authenticationManager
+			, final PasswordEncoder passwordEncoder, final UserDao userDao, final GroupDao groupDao,
+			                                     final UserGroupDao userGroupDao,
+			                                     final UserRoleDao userRoleDao, final GroupRoleDao groupRoleDao,
+			                                     final RoleDao roleDao,
+			                                     final PermissionDao permissionDao,
+			                                     final RolePermissionDao rolePermissionDao) {
+		return new UserServiceImpl(authenticationManager, passwordEncoder, userDao, groupDao, userGroupDao,
+				userRoleDao, groupRoleDao, roleDao, permissionDao, rolePermissionDao);
 	}
-
 
 }

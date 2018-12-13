@@ -1,5 +1,6 @@
 package xin.yuki.auth.server.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.boot.autoconfigure.security.oauth2.authserver.AuthorizationServerProperties;
@@ -19,7 +20,9 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
+import org.springframework.security.oauth2.provider.ClientRegistrationException;
 import org.springframework.security.oauth2.provider.TokenGranter;
 import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.code.JdbcAuthorizationCodeServices;
@@ -34,7 +37,6 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.util.Assert;
 import xin.yuki.auth.core.config.ClientConfiguration;
 import xin.yuki.auth.core.config.CoreConfiguration;
-import xin.yuki.auth.core.service.ClientService;
 import xin.yuki.auth.server.service.impl.DynamicTokenEndpoint;
 import xin.yuki.auth.server.service.impl.DynamicTokenGranter;
 
@@ -51,6 +53,7 @@ import java.util.Collections;
 @EnableAuthorizationServer
 @EnableConfigurationProperties(AuthorizationServerProperties.class)
 @Import({ClientConfiguration.class, CoreConfiguration.class})
+@Slf4j
 public class AuthorizationSecurityConfiguration extends AuthorizationServerConfigurerAdapter {
 
 	private static final String DEFAULT_FRONT_CLIENT = "auth-front";
@@ -60,21 +63,18 @@ public class AuthorizationSecurityConfiguration extends AuthorizationServerConfi
 	private final AuthorizationServerProperties authorizationServerProperties;
 	private final DataSource dataSource;
 	private final ClientDetailsService clientDetailsService;
-	private final ClientService clientService;
 
 	@Autowired
 	public AuthorizationSecurityConfiguration(final AuthenticationConfiguration authenticationConfiguration,
 	                                          final DataSource dataSource,
 	                                          final PasswordEncoder passwordEncoder,
 	                                          final AuthorizationServerProperties authorizationServerProperties,
-	                                          final ClientDetailsService clientDetailsService,
-	                                          final ClientService clientService) throws Exception {
+	                                          final ClientDetailsService clientDetailsService) throws Exception {
 		this.authenticationManager = authenticationConfiguration.getAuthenticationManager();
 		this.passwordEncoder = passwordEncoder;
 		this.dataSource = dataSource;
 		this.authorizationServerProperties = authorizationServerProperties;
 		this.clientDetailsService = clientDetailsService;
-		this.clientService = clientService;
 	}
 
 
@@ -86,7 +86,13 @@ public class AuthorizationSecurityConfiguration extends AuthorizationServerConfi
 
 
 		//添加auth-front
-		if (!this.clientService.clientExists(DEFAULT_FRONT_CLIENT)) {
+		ClientDetails clientDetails = null;
+		try {
+			clientDetails = this.clientDetailsService.loadClientByClientId(DEFAULT_FRONT_CLIENT);
+		} catch (final ClientRegistrationException e) {
+			log.info("Initialize Front Client");
+		}
+		if (clientDetails == null) {
 			builder.withClient(DEFAULT_FRONT_CLIENT).secret(DEFAULT_FRONT_CLIENT)
 					.scopes("all")
 					.authorizedGrantTypes("password,client_credentials".split(","))
@@ -97,7 +103,12 @@ public class AuthorizationSecurityConfiguration extends AuthorizationServerConfi
 		}
 
 		//添加auth-manager
-		if (!this.clientService.clientExists(DEFAULT_AUTH_MANAGER_CLIENT)) {
+		try {
+			clientDetails = this.clientDetailsService.loadClientByClientId(DEFAULT_AUTH_MANAGER_CLIENT);
+		} catch (final ClientRegistrationException e) {
+			log.info("Initialize Manager Client");
+		}
+		if (clientDetails == null) {
 			builder.withClient(DEFAULT_AUTH_MANAGER_CLIENT).secret(DEFAULT_AUTH_MANAGER_CLIENT)
 					.scopes("all")
 					.authorizedGrantTypes("client_credentials")
@@ -106,7 +117,7 @@ public class AuthorizationSecurityConfiguration extends AuthorizationServerConfi
 					//一个月有效期
 					.refreshTokenValiditySeconds(2592000);
 		}
-//		builder.build();
+		builder.build();
 	}
 
 

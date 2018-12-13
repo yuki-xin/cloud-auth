@@ -4,8 +4,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.security.core.GrantedAuthority;
 
-import javax.persistence.Entity;
-import javax.persistence.Index;
 import javax.persistence.Table;
 
 /**
@@ -16,9 +14,8 @@ import javax.persistence.Table;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@Entity
-@Table(name = "permissions", indexes = @Index(name = "name_idx", columnList = "name", unique = true))
-public class PermissionEntity extends BaseEntity implements GrantedAuthority {
+@Table(name = "permissions")
+public class PermissionModel extends BaseModel implements GrantedAuthority {
 
 	private static final long serialVersionUID = -812812513295029240L;
 
