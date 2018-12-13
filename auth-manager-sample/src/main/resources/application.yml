@@ -1,24 +1,7 @@
 server:
   port: 8081
-  error:
-    whitelabel:
-      enabled: false
-
-
+  
 spring:
-  datasource:
-    hikari:
-      minimum-idle: 2
-      maximum-pool-size: 20
-      pool-name: HikariCP
-      connection-test-query: select 1
-      idle-timeout: 30000
-      connection-timeout: 60000
-#    url: jdbc:h2:file:./server-sample/db/main
-    url: jdbc:mysql://localhost:3306/server-sample?useUnicode=true&characterEncoding=utf8&useSSL=false
-    username: root
-    password: 567711
-
   main:
     web-application-type: servlet
     allow-bean-definition-overriding: true
@@ -33,3 +16,4 @@ security:
     client:
       client-id: auth-manager
       client-secret: auth-manager
+

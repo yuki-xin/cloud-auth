@@ -13,7 +13,6 @@ spring:
       connection-test-query: select 1
       idle-timeout: 30000
       connection-timeout: 60000
-#    url: jdbc:h2:file:./server-sample/db/main
     url: jdbc:mysql://localhost:3306/server-sample?useUnicode=true&characterEncoding=utf8&useSSL=false
     username: root
     password: 567711
@@ -33,3 +32,6 @@ security:
     authorization:
       jwt:
         key-value: admin
+
+#mybatis:
+#  mapper-locations: classpath:mapper/*.xml

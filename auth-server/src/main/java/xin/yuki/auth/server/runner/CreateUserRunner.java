@@ -9,6 +9,11 @@ import xin.yuki.auth.core.entity.PermissionModel;
 import xin.yuki.auth.core.entity.RoleModel;
 import xin.yuki.auth.core.entity.UserModel;
 
+/**
+ * 用CommandLineRunner运行可以保证事务的正常使用
+ *
+ * @author Zhang
+ */
 public class CreateUserRunner implements CommandLineRunner {
 
 	private static final String DEFAULT_USER = "admin";
