@@ -19,7 +19,6 @@ spring:
 
   main:
     web-application-type: servlet
-    allow-bean-definition-overriding: true
 
   security:
     user:

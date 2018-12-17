@@ -2,9 +2,9 @@ package xin.yuki.auth.autoconfigure;
 
 
 import org.springframework.context.annotation.Import;
-import xin.yuki.auth.server.config.AuthenticationSecurityConfiguration;
-import xin.yuki.auth.server.config.AuthorizationSecurityConfiguration;
+import xin.yuki.auth.client.config.ResourceServerSecurityConfiguration;
+import xin.yuki.auth.core.config.AuthClientCoreConfiguration;
 
-@Import({AuthenticationSecurityConfiguration.class, AuthorizationSecurityConfiguration.class})
+@Import({ResourceServerSecurityConfiguration.class, AuthClientCoreConfiguration.class})
 public @interface EnableCloudAuthServer {
 }

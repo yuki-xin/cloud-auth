@@ -15,6 +15,7 @@
     <modules>
         <module>auth-core</module>
         <module>auth-server</module>
+        <module>auth-client</module>
         <module>cloud-auth-spring-boot-autoconfigure</module>
         <module>cloud-auth-spring-boot-starter</module>
         <module>auth-server-sample</module>

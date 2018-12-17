@@ -1,4 +1,4 @@
-package xin.yuki.auth.manager.service.impl;
+package xin.yuki.auth.client.service.impl;
 
 
 import org.springframework.security.core.AuthenticationException;

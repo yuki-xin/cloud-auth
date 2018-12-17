@@ -1,4 +1,4 @@
-package xin.yuki.auth.manager.config;
+package xin.yuki.auth.client.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
@@ -14,7 +14,7 @@ import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
 import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import xin.yuki.auth.manager.service.impl.DynamicTokenService;
+import xin.yuki.auth.client.service.impl.DynamicTokenService;
 
 /**
  * @Title AuthorizationSecurityConfig

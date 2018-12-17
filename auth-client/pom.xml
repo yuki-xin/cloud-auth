@@ -4,12 +4,12 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>auth-manager-sample</artifactId>
+  <artifactId>auth-client</artifactId>
   <version>1.0.0</version>
   <packaging>jar</packaging>
 
-  <name>auth-manager-sample</name>
-  <description>Auth Manager Sample</description>
+  <name>auth-client</name>
+  <description>Auth Client</description>
 
   <parent>
     <groupId>xin.yuki</groupId>
@@ -20,24 +20,12 @@
 
   <dependencies>
 
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <version>1.18.2</version>
-      <optional>true</optional>
-    </dependency>
+
 
     <dependency>
-      <groupId>xin.yuki</groupId>
-      <artifactId>auth-client</artifactId>
-      <version>${parent.version}</version>
+      <groupId>org.springframework.security.oauth.boot</groupId>
+      <artifactId>spring-security-oauth2-autoconfigure</artifactId>
     </dependency>
-
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-
 
 
     <dependency>
