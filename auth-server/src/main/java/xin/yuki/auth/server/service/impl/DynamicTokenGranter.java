@@ -13,7 +13,6 @@ import org.springframework.security.oauth2.provider.refresh.RefreshTokenGranter;
 import org.springframework.security.oauth2.provider.request.DefaultOAuth2RequestFactory;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -39,20 +38,16 @@ public class DynamicTokenGranter extends CompositeTokenGranter {
 		this.jdbcTokenService = jdbcTokenService;
 		this.authorizationCodeServices = authorizationCodeServices;
 		this.authenticationManager = authenticationManager;
-	}
-
-	@PostConstruct
-	public void init() {
 		this.getDefaultTokenGranters().forEach(this::addTokenGranter);
-
 	}
+
 
 	private List<TokenGranter> getDefaultTokenGranters() {
 		final ClientDetailsService clientDetails = this.clientDetailsService;
 		final AuthorizationServerTokenServices tokenServices = null;
 		final AuthorizationCodeServices authorizationCodeServices = this.authorizationCodeServices;
 		final OAuth2RequestFactory requestFactory = new DefaultOAuth2RequestFactory(this.clientDetailsService);
-		;
+
 		final List<TokenGranter> tokenGranters = new ArrayList<>();
 
 		final AuthorizationCodeTokenGranter authorizationCode = new AuthorizationCodeTokenGranter(null,
