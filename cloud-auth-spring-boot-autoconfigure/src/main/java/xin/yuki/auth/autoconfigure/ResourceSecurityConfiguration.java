@@ -26,14 +26,14 @@ import xin.yuki.auth.client.service.impl.DynamicTokenService;
 @Configuration
 @EnableResourceServer
 @ConditionalOnProperty(prefix = "cloud-auth.client")
-public class ClientSecurityConfiguration extends ResourceServerConfigurerAdapter {
+public class ResourceSecurityConfiguration extends ResourceServerConfigurerAdapter {
 
 
 	private final ResourceServerProperties resourceServerProperties;
 
 
 	@Autowired
-	public ClientSecurityConfiguration(final ResourceServerProperties resourceServerProperties) {
+	public ResourceSecurityConfiguration(final ResourceServerProperties resourceServerProperties) {
 		this.resourceServerProperties = resourceServerProperties;
 
 	}
