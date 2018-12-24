@@ -130,6 +130,7 @@ public class AuthorizationSecurityConfiguration extends AuthorizationServerConfi
 				.passwordEncoder(this.passwordEncoder);
 	}
 
+
 	@Bean
 	public AuthorizationServerTokenServices jdbcTokenService() {
 		final DefaultTokenServices defaultTokenServices = new DefaultTokenServices();

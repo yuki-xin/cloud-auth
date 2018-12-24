@@ -10,10 +10,9 @@ spring:
 security:
   oauth2:
     resource:
-      token-info-uri: http://127.0.0.1:8080/oauth/check_token
       jwt:
         key-uri: http://127.0.0.1:8080/oauth/token_key
+      token-info-uri: http://127.0.0.1:8080/oauth/check_token
     client:
       client-id: auth-manager
       client-secret: auth-manager
-

@@ -34,7 +34,7 @@ public class AuthenticationSecurityConfiguration extends WebSecurityConfigurerAd
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-				.antMatchers("/error").permitAll()
+				.antMatchers("/error", "/oauth/token_key").permitAll()
 				.anyRequest().authenticated()
 				.and()
 				.formLogin().defaultSuccessUrl("/")

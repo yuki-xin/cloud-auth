@@ -1,14 +1,10 @@
-package xin.yuki.auth.autoconfigure;
+package xin.yuki.auth.client.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
@@ -22,18 +18,13 @@ import xin.yuki.auth.client.service.impl.DynamicTokenService;
  * @Author ZQian
  * @date: 2018/11/21 16:45
  */
-@EnableResourceServer
-@ConditionalOnProperty(prefix = "cloud-auth.client", name = "enabled")
-public class ResourceSecurityConfiguration extends ResourceServerConfigurerAdapter {
+public class AuthResourceSecurityConfiguration extends ResourceServerConfigurerAdapter {
 
 
-	private final ResourceServerProperties resourceServerProperties;
+	public final ResourceServerProperties resourceServerProperties;
 
-
-	@Autowired
-	public ResourceSecurityConfiguration(final ResourceServerProperties resourceServerProperties) {
+	public AuthResourceSecurityConfiguration(final ResourceServerProperties resourceServerProperties) {
 		this.resourceServerProperties = resourceServerProperties;
-
 	}
 
 	@Override
@@ -68,8 +59,7 @@ public class ResourceSecurityConfiguration extends ResourceServerConfigurerAdapt
 	}
 
 	@Bean
-	public DefaultTokenServices jwtTokenServices(final TokenStore jwtTokenStore,
-	                                             final ApplicationContext applicationContext) {
+	public DefaultTokenServices jwtTokenServices(final TokenStore jwtTokenStore) {
 		final DefaultTokenServices services = new DefaultTokenServices();
 		services.setTokenStore(jwtTokenStore);
 		return services;
@@ -80,7 +70,6 @@ public class ResourceSecurityConfiguration extends ResourceServerConfigurerAdapt
 	public ResourceServerTokenServices dynamicTokenServices(final DefaultTokenServices jwtTokenService) {
 		return new DynamicTokenService(jwtTokenService, this.remoteTokenServices());
 	}
-
 
 
 }
