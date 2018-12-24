@@ -6,5 +6,5 @@ import xin.yuki.auth.core.entity.UserRoleRel;
 /**
  * @author zhang
  */
-public interface UserRoleDao extends BaseListMapper<UserRoleRel> {
+public interface UserRoleMapper extends BaseListMapper<UserRoleRel> {
 }

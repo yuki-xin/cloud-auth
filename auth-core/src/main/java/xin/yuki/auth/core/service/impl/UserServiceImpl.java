@@ -29,21 +29,21 @@ public class UserServiceImpl implements UserService {
 
 	private final AuthenticationManager authenticationManager;
 	private final PasswordEncoder passwordEncoder;
-	private final UserDao userDao;
-	private final GroupDao groupDao;
-	private final UserGroupDao userGroupDao;
-	private final UserRoleDao userRoleDao;
-	private final GroupRoleDao groupRoleDao;
-	private final RoleDao roleDao;
-	private final PermissionDao permissionDao;
-	private final RolePermissionDao rolePermissionDao;
+	private final UserMapper userDao;
+	private final GroupMapper groupDao;
+	private final UserGroupMapper userGroupDao;
+	private final UserRoleMapper userRoleDao;
+	private final GroupRoleMapper groupRoleDao;
+	private final RoleMapper roleDao;
+	private final PermissionMapper permissionDao;
+	private final RolePermissionMapper rolePermissionDao;
 
 	public UserServiceImpl(final AuthenticationManager authenticationManager,
-	                       final PasswordEncoder passwordEncoder, final UserDao userDao, final GroupDao groupDao,
-	                       final UserGroupDao userGroupDao, final UserRoleDao userRoleDao,
-	                       final GroupRoleDao groupRoleDao,
-	                       final RoleDao roleDao, final PermissionDao permissionDao,
-	                       final RolePermissionDao rolePermissionDao) {
+	                       final PasswordEncoder passwordEncoder, final UserMapper userDao, final GroupMapper groupDao,
+	                       final UserGroupMapper userGroupDao, final UserRoleMapper userRoleDao,
+	                       final GroupRoleMapper groupRoleDao,
+	                       final RoleMapper roleDao, final PermissionMapper permissionDao,
+	                       final RolePermissionMapper rolePermissionDao) {
 		this.authenticationManager = authenticationManager;
 		this.passwordEncoder = passwordEncoder;
 		this.userDao = userDao;

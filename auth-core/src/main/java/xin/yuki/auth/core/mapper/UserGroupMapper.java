@@ -6,5 +6,5 @@ import xin.yuki.auth.core.entity.UserGroupRel;
 /**
  * @author zhang
  */
-public interface UserGroupDao extends BaseListMapper<UserGroupRel> {
+public interface UserGroupMapper extends BaseListMapper<UserGroupRel> {
 }

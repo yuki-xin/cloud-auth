@@ -29,36 +29,30 @@ public class UserModel extends BaseModel implements UserDetails {
 
 
 	private static final long serialVersionUID = 5407560146864572541L;
-
-	private String username;
-	private String password;
-
-	@Column(name = "enabled")
-	private Boolean active;
-
 	/**
 	 * 查询用的组
 	 */
 	@Transient
 	private final List<GroupModel> groups = new ArrayList<>();
-
 	/**
 	 * 查询用的角色
 	 */
 	@Transient
 	private final List<RoleModel> roles = new ArrayList<>();
-
 	/**
 	 * 保存用的角色关系
 	 */
 	@Transient
 	private final List<UserRoleRel> userRole = new ArrayList<>();
-
 	/**
 	 * 保存用的组关系
 	 */
 	@Transient
 	private final List<UserGroupRel> userGroup = new ArrayList<>();
+	private String username;
+	private String password;
+	@Column(name = "enabled")
+	private Boolean active;
 
 	public UserModel(final Long id, final String username, final String password, final boolean enabled) {
 		this.setId(id);
@@ -71,8 +65,8 @@ public class UserModel extends BaseModel implements UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		final Collection<RoleModel> groupRoles =
-				CollectionUtils.emptyIfNull(this.groups).stream().flatMap(g -> g.getRoles().stream()).collect(Collectors.toList());
-		final Collection<RoleModel> allRoles = CollectionUtils.union(CollectionUtils.emptyIfNull(this.roles),
+				CollectionUtils.emptyIfNull(this.getGroups()).stream().flatMap(g -> g.getRoles().stream()).collect(Collectors.toList());
+		final Collection<RoleModel> allRoles = CollectionUtils.union(CollectionUtils.emptyIfNull(this.getRoles()),
 				groupRoles);
 
 		return allRoles.stream().flatMap(role -> role.getPermissions().stream()).collect(Collectors.toList());

@@ -3,6 +3,7 @@ package xin.yuki.auth.autoconfigure;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.security.oauth2.authserver.AuthorizationServerProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationContext;
@@ -51,6 +52,7 @@ import java.util.Collections;
 @EnableAuthorizationServer
 @EnableConfigurationProperties({AuthorizationServerProperties.class, CloudAuthServerProperties.class})
 @Slf4j
+@ConditionalOnProperty(prefix = "cloud-auth.server", name = "enabled")
 public class AuthorizationSecurityConfiguration extends AuthorizationServerConfigurerAdapter {
 
 	private static final String DEFAULT_FRONT_CLIENT = "auth-front";

@@ -32,4 +32,10 @@ cloud-auth:
     jwt-key: admin
     username: admin
     password: admin
-
+    enabled: true
+mybatis:
+  mapper-locations: classpath:cloud-auth/mapper/*.xml
+  configuration:
+    lazy-loading-enabled: true
+    aggressive-lazy-loading: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

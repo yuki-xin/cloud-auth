@@ -1,10 +1,9 @@
 package xin.yuki.auth.autoconfigure;
 
 
-import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,10 +13,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
-import tk.mybatis.mapper.autoconfigure.MapperAutoConfiguration;
 import xin.yuki.auth.core.mapper.*;
 import xin.yuki.auth.core.properties.CloudAuthServerProperties;
-import xin.yuki.auth.core.service.UserService;
 import xin.yuki.auth.core.service.impl.UserServiceImpl;
 import xin.yuki.auth.server.runner.CreateUserRunner;
 
@@ -29,10 +26,7 @@ import xin.yuki.auth.server.runner.CreateUserRunner;
  */
 @Configuration
 @EnableWebSecurity
-@Import(AuthServerCoreConfiguration.class)
-@AutoConfigureAfter(value = {MapperAutoConfiguration.class}, name = {
-		"tk.mybatis.mapper.autoconfigure.MapperAutoConfiguration"
-})
+@ConditionalOnProperty(prefix = "cloud-auth.server", name = "enabled")
 public class AuthenticationSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 
@@ -73,15 +67,13 @@ public class AuthenticationSecurityConfiguration extends WebSecurityConfigurerAd
 
 	@Bean
 	public UserDetailsManager userDetailsService(final PasswordEncoder passwordEncoder,
-	                                             final UserDao userDao,
-	                                             final GroupDao groupDao, final UserGroupDao userGroupDao,
-	                                             final UserRoleDao userRoleDao, final GroupRoleDao groupRoleDao,
-	                                             final RoleDao roleDao, final PermissionDao permissionDao,
-	                                             final RolePermissionDao rolePermissionDao) throws Exception {
-		final UserService userDetailsService = new UserServiceImpl(this.authenticationManager(),
-				passwordEncoder, userDao, groupDao, userGroupDao, userRoleDao, groupRoleDao, roleDao, permissionDao,
-				rolePermissionDao);
-		return userDetailsService;
+	                                             final UserMapper userDao,
+	                                             final GroupMapper groupDao, final UserGroupMapper userGroupDao,
+	                                             final UserRoleMapper userRoleDao, final GroupRoleMapper groupRoleDao,
+	                                             final RoleMapper roleDao, final PermissionMapper permissionDao,
+	                                             final RolePermissionMapper rolePermissionDao) throws Exception {
+		return new UserServiceImpl(this.authenticationManager(), passwordEncoder, userDao, groupDao, userGroupDao,
+				userRoleDao, groupRoleDao, roleDao, permissionDao, rolePermissionDao);
 	}
 
 

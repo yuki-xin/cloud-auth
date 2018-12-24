@@ -6,5 +6,5 @@ import xin.yuki.auth.core.entity.GroupRoleRel;
 /**
  * @author zhang
  */
-public interface GroupRoleDao extends BaseListMapper<GroupRoleRel> {
+public interface GroupRoleMapper extends BaseListMapper<GroupRoleRel> {
 }

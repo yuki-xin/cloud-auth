@@ -7,10 +7,14 @@ import xin.yuki.auth.core.entity.UserModel;
 /**
  * @author zhang
  */
-public interface UserDao extends BaseListMapper<UserModel> {
+public interface UserMapper extends BaseListMapper<UserModel> {
 
 
 	UserModel findOneByUsername(@Param("username") String username);
+
+	UserModel findByGroupId(@Param("groupId") String groupId);
+
+	UserModel findByRoleId(@Param("roleId") String roleId);
 
 
 }
