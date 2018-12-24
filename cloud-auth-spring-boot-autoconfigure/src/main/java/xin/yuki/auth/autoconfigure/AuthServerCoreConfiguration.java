@@ -1,11 +1,11 @@
-package xin.yuki.auth.core.config;
+package xin.yuki.auth.autoconfigure;
 
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import tk.mybatis.mapper.autoconfigure.MapperAutoConfiguration;
 import tk.mybatis.mapper.autoconfigure.MybatisProperties;
 import tk.mybatis.spring.annotation.MapperScan;
+import xin.yuki.auth.core.properties.CloudAuthServerProperties;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,10 +14,12 @@ import java.util.List;
 /**
  * @author zhang
  */
-@MapperScan(basePackages = "xin.yuki.auth.core.mapper")
-@PropertySource("auth-core.properties")
 @Configuration
-@AutoConfigureBefore(MapperAutoConfiguration.class)
+@MapperScan(basePackages = "xin.yuki.auth.core.mapper")
+@AutoConfigureBefore(
+		name = {"tk.mybatis.mapper.autoconfigure.MapperAutoConfiguration"}
+)
+@EnableConfigurationProperties(CloudAuthServerProperties.class)
 public class AuthServerCoreConfiguration {
 
 

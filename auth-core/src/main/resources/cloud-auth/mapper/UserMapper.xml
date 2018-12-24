@@ -2,10 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="xin.yuki.auth.core.mapper.UserDao">
     <sql id="Base_Column_List">
-        `username`,
-        `password`,
-        `enabled`,
-        `id`
+        username,
+        password,
+        enabled,
+        id
     </sql>
     <resultMap id="BaseResultMap" type="xin.yuki.auth.core.entity.UserModel">
         <result column="username" property="username"/>

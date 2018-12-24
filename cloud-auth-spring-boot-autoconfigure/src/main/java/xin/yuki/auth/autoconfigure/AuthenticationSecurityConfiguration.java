@@ -1,9 +1,10 @@
-package xin.yuki.auth.server.config;
+package xin.yuki.auth.autoconfigure;
 
 
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,7 +14,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
+import tk.mybatis.mapper.autoconfigure.MapperAutoConfiguration;
 import xin.yuki.auth.core.mapper.*;
+import xin.yuki.auth.core.properties.CloudAuthServerProperties;
 import xin.yuki.auth.core.service.UserService;
 import xin.yuki.auth.core.service.impl.UserServiceImpl;
 import xin.yuki.auth.server.runner.CreateUserRunner;
@@ -26,6 +29,10 @@ import xin.yuki.auth.server.runner.CreateUserRunner;
  */
 @Configuration
 @EnableWebSecurity
+@Import(AuthServerCoreConfiguration.class)
+@AutoConfigureAfter(value = {MapperAutoConfiguration.class}, name = {
+		"tk.mybatis.mapper.autoconfigure.MapperAutoConfiguration"
+})
 public class AuthenticationSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 
@@ -80,8 +87,8 @@ public class AuthenticationSecurityConfiguration extends WebSecurityConfigurerAd
 
 	@Bean
 	public CreateUserRunner createUserRunner(final UserDetailsManager userDetailsService,
-	                                         final SecurityProperties securityProperties) {
-		return new CreateUserRunner(userDetailsService, securityProperties);
+	                                         final CloudAuthServerProperties cloudAuthServerProperties) {
+		return new CreateUserRunner(userDetailsService, cloudAuthServerProperties);
 	}
 
 }

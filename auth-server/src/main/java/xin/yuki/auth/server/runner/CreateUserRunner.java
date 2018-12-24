@@ -2,12 +2,12 @@ package xin.yuki.auth.server.runner;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.security.provisioning.UserDetailsManager;
 import xin.yuki.auth.core.entity.GroupModel;
 import xin.yuki.auth.core.entity.PermissionModel;
 import xin.yuki.auth.core.entity.RoleModel;
 import xin.yuki.auth.core.entity.UserModel;
+import xin.yuki.auth.core.properties.CloudAuthServerProperties;
 
 /**
  * 用CommandLineRunner运行可以保证事务的正常使用
@@ -17,23 +17,22 @@ import xin.yuki.auth.core.entity.UserModel;
 public class CreateUserRunner implements CommandLineRunner {
 
 	private static final String DEFAULT_USER = "admin";
-
-
-	public CreateUserRunner(final UserDetailsManager userDetailsService, final SecurityProperties securityProperties) {
-		this.userDetailsService = userDetailsService;
-		this.securityProperties = securityProperties;
-	}
-
+	private static final String DEFAULT_PASSWORD = "admin";
 	private final UserDetailsManager userDetailsService;
+	private final CloudAuthServerProperties cloudAuthServerProperties;
 
-	private final SecurityProperties securityProperties;
+	public CreateUserRunner(final UserDetailsManager userDetailsService,
+	                        final CloudAuthServerProperties cloudAuthServerProperties) {
+		this.userDetailsService = userDetailsService;
+		this.cloudAuthServerProperties = cloudAuthServerProperties;
+	}
 
 	@Override
 	public void run(final String... args) {
-		final String username = StringUtils.isEmpty(this.securityProperties.getUser().getName()) ? DEFAULT_USER :
-				this.securityProperties.getUser().getName();
-		final String password = StringUtils.isEmpty(this.securityProperties.getUser().getName()) ? DEFAULT_USER :
-				this.securityProperties.getUser().getName();
+		final String username = StringUtils.isEmpty(this.cloudAuthServerProperties.getUsername()) ? DEFAULT_USER :
+				this.cloudAuthServerProperties.getUsername();
+		final String password = StringUtils.isEmpty(this.cloudAuthServerProperties.getPassword()) ? DEFAULT_PASSWORD :
+				this.cloudAuthServerProperties.getPassword();
 		if (!this.userDetailsService.userExists(username)) {
 			//创建默认用户组和角色
 			final RoleModel role = new RoleModel();

@@ -1,6 +1,7 @@
-package xin.yuki.auth.client.config;
+package xin.yuki.auth.autoconfigure;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -24,14 +25,15 @@ import xin.yuki.auth.client.service.impl.DynamicTokenService;
  */
 @Configuration
 @EnableResourceServer
-public class ResourceServerSecurityConfiguration extends ResourceServerConfigurerAdapter {
+@ConditionalOnProperty(prefix = "cloud-auth.client")
+public class ClientSecurityConfiguration extends ResourceServerConfigurerAdapter {
 
 
 	private final ResourceServerProperties resourceServerProperties;
 
 
 	@Autowired
-	public ResourceServerSecurityConfiguration(final ResourceServerProperties resourceServerProperties) {
+	public ClientSecurityConfiguration(final ResourceServerProperties resourceServerProperties) {
 		this.resourceServerProperties = resourceServerProperties;
 
 	}
