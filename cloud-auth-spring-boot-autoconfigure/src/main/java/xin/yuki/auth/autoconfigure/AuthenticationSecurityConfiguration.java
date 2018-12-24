@@ -1,9 +1,7 @@
 package xin.yuki.auth.autoconfigure;
 
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -24,14 +22,12 @@ import xin.yuki.auth.server.runner.CreateUserRunner;
  * @Author ZQian
  * @date: 2018/11/21 17:45
  */
-@Configuration
 @EnableWebSecurity
-@ConditionalOnProperty(prefix = "cloud-auth.server", name = "enabled")
 public class AuthenticationSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 
 	@Bean
-	protected static PasswordEncoder passwordEncoder() {
+	protected PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 
