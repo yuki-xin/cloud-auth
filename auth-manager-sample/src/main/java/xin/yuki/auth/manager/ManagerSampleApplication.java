@@ -2,7 +2,7 @@ package xin.yuki.auth.manager;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import xin.yuki.auth.client.annotation.EnableCloudAuthClient;
+import xin.yuki.auth.boot.EnableCloudAuthClient;
 
 @SpringBootApplication
 @EnableCloudAuthClient

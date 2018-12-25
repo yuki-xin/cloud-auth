@@ -1,4 +1,4 @@
-package xin.yuki.auth.client.config;
+package xin.yuki.auth.boot;
 
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.context.annotation.Bean;
@@ -31,7 +31,6 @@ public class AuthResourceSecurityConfiguration extends ResourceServerConfigurerA
 	public void configure(final HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 				.antMatchers("/error").permitAll()
-				.antMatchers("/test").hasAnyAuthority("ddd")
 				.anyRequest().authenticated()
 				.and()
 				.headers().frameOptions().disable()

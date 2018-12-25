@@ -1,4 +1,4 @@
-package xin.yuki.auth.autoconfigure;
+package xin.yuki.auth.boot;
 
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import tk.mybatis.mapper.autoconfigure.MybatisProperties;

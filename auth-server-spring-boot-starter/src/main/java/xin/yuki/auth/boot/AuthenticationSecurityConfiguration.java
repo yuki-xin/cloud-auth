@@ -1,4 +1,4 @@
-package xin.yuki.auth.autoconfigure;
+package xin.yuki.auth.boot;
 
 
 import org.springframework.context.annotation.Bean;
