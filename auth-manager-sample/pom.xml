@@ -30,6 +30,12 @@
 
     <dependency>
       <groupId>xin.yuki</groupId>
+      <artifactId>auth-core</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>xin.yuki</groupId>
       <artifactId>auth-client-spring-boot-starter</artifactId>
       <version>${project.version}</version>
     </dependency>

@@ -33,7 +33,6 @@ import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.util.Assert;
-import xin.yuki.auth.core.properties.CloudAuthServerProperties;
 import xin.yuki.auth.server.service.impl.DynamicTokenEndpoint;
 import xin.yuki.auth.server.service.impl.DynamicTokenGranter;
 
@@ -47,7 +46,7 @@ import java.util.Collections;
  * @date: 2018/11/21 16:45
  */
 @EnableAuthorizationServer
-@EnableConfigurationProperties({AuthorizationServerProperties.class, CloudAuthServerProperties.class})
+@EnableConfigurationProperties({AuthorizationServerProperties.class})
 @Slf4j
 public class AuthorizationSecurityConfiguration extends AuthorizationServerConfigurerAdapter {
 
@@ -55,21 +54,21 @@ public class AuthorizationSecurityConfiguration extends AuthorizationServerConfi
 	private static final String DEFAULT_AUTH_MANAGER_CLIENT = "auth-manager";
 	private final AuthenticationManager authenticationManager;
 	private final PasswordEncoder passwordEncoder;
-	private final CloudAuthServerProperties cloudAuthServerProperties;
 	private final DataSource dataSource;
 	private final ClientDetailsService clientDetailsService;
+	private final AuthorizationServerProperties authorizationServerProperties;
 
 	@Autowired
 	public AuthorizationSecurityConfiguration(final AuthenticationConfiguration authenticationConfiguration,
 	                                          final DataSource dataSource,
 	                                          final PasswordEncoder passwordEncoder,
-	                                          final CloudAuthServerProperties cloudAuthServerProperties,
-	                                          final ClientDetailsService clientDetailsService) throws Exception {
+	                                          final ClientDetailsService clientDetailsService,
+	                                          final AuthorizationServerProperties authorizationServerProperties) throws Exception {
 		this.authenticationManager = authenticationConfiguration.getAuthenticationManager();
 		this.passwordEncoder = passwordEncoder;
 		this.dataSource = dataSource;
-		this.cloudAuthServerProperties = cloudAuthServerProperties;
 		this.clientDetailsService = clientDetailsService;
+		this.authorizationServerProperties = authorizationServerProperties;
 	}
 
 
@@ -158,8 +157,8 @@ public class AuthorizationSecurityConfiguration extends AuthorizationServerConfi
 
 	@Bean
 	public JwtAccessTokenConverter jwtAccessTokenConverter() {
-		final String keyValue = this.cloudAuthServerProperties.getJwtKey();
-		Assert.notNull(this.cloudAuthServerProperties.getJwtKey(), "keyValue cannot be null");
+		final String keyValue = this.authorizationServerProperties.getJwt().getKeyValue();
+		Assert.notNull(keyValue, "keyValue cannot be null");
 		final JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
 		if (!keyValue.startsWith("-----BEGIN")) {
 			converter.setSigningKey(keyValue);

@@ -12,7 +12,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
 import xin.yuki.auth.core.mapper.*;
-import xin.yuki.auth.core.properties.CloudAuthServerProperties;
 import xin.yuki.auth.core.service.impl.UserServiceImpl;
 import xin.yuki.auth.server.runner.CreateUserRunner;
 
@@ -74,9 +73,8 @@ public class AuthenticationSecurityConfiguration extends WebSecurityConfigurerAd
 
 
 	@Bean
-	public CreateUserRunner createUserRunner(final UserDetailsManager userDetailsService,
-	                                         final CloudAuthServerProperties cloudAuthServerProperties) {
-		return new CreateUserRunner(userDetailsService, cloudAuthServerProperties);
+	public CreateUserRunner createUserRunner(final UserDetailsManager userDetailsService) {
+		return new CreateUserRunner(userDetailsService);
 	}
 
 }

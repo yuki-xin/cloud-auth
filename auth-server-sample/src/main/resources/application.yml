@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8000
   error:
     whitelabel:
       enabled: false
@@ -27,9 +27,9 @@ spring:
       password: admin
 
 
-cloud-auth:
-  server:
-    jwt-key: admin
-    username: admin
-    password: admin
-
+# Auth Server 配置
+security:
+  oauth2:
+    authorization:
+      jwt:
+        key-value: admin

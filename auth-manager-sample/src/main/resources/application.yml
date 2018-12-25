@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8001
   
 spring:
   main:
@@ -7,12 +7,15 @@ spring:
     allow-bean-definition-overriding: true
 
 
+
+
+# Auth Client  配置
 security:
   oauth2:
     resource:
       jwt:
-        key-uri: http://127.0.0.1:8080/oauth/token_key
-      token-info-uri: http://127.0.0.1:8080/oauth/check_token
+        key-uri: http://127.0.0.1:8000/oauth/token_key
+      token-info-uri: http://127.0.0.1:8000/oauth/check_token
     client:
       client-id: auth-manager
       client-secret: auth-manager

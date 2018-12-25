@@ -1,9 +1,7 @@
 package xin.yuki.auth.boot;
 
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import tk.mybatis.mapper.autoconfigure.MybatisProperties;
 import tk.mybatis.spring.annotation.MapperScan;
-import xin.yuki.auth.core.properties.CloudAuthServerProperties;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,7 +11,6 @@ import java.util.List;
  * @author zhang
  */
 @MapperScan(basePackages = "xin.yuki.auth.core.mapper")
-@EnableConfigurationProperties({CloudAuthServerProperties.class})
 public class CloudAuthAutoConfiguration {
 
 
