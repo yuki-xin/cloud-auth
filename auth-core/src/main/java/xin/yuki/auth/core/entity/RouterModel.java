@@ -10,10 +10,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @Title MenuEntity
- * @Description
- * @Author ZQian
- * @date: 2018/11/27 10:10
+ *  MenuEntity
+ *
+ * @author ZQian
+ *  2018/11/27 10:10
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

@@ -16,10 +16,10 @@ import xin.yuki.auth.core.service.impl.UserServiceImpl;
 import xin.yuki.auth.server.runner.CreateUserRunner;
 
 /**
- * @Title AuthorizationSecurityConfig
- * @Description 认证配置
- * @Author ZQian
- * @date: 2018/11/21 17:45
+ *  AuthorizationSecurityConfig
+ *
+ * @author ZQian
+ * 2018/11/21 17:45
  */
 @EnableWebSecurity
 public class AuthenticationSecurityConfiguration extends WebSecurityConfigurerAdapter {

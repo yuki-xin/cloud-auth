@@ -40,10 +40,10 @@ import javax.sql.DataSource;
 import java.util.Collections;
 
 /**
- * @Title AuthorizationSecurityConfig
- * @Description OAuth2授权配置
- * @Author ZQian
- * @date: 2018/11/21 16:45
+ *  AuthorizationSecurityConfig
+ *
+ * @author ZQian
+ * 2018/11/21 16:45
  */
 @EnableAuthorizationServer
 @EnableConfigurationProperties({AuthorizationServerProperties.class})

@@ -10,10 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @Title GroupEntity
- * @Description
- * @Author ZQian
- * @date: 2018/11/26 16:04
+ *  GroupEntity
+ *
+ * @author ZQian
+ * 2018/11/26 16:04
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

@@ -7,10 +7,11 @@ import org.springframework.security.core.GrantedAuthority;
 import javax.persistence.Table;
 
 /**
- * @Title AuthorityEntity
- * @Description
- * @Author ZQian
- * @date: 2018/11/26 16:05
+ * AuthorityEntity
+ *
+ *
+ * @author ZQian
+ * 2018/11/26 16:05
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

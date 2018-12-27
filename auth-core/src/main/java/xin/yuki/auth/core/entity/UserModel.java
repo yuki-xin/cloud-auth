@@ -16,10 +16,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @Title UserEntity
- * @Description
- * @Author ZQian
- * @date: 2018/11/26 15:43
+ *  UserEntity
+ *
+ * @author ZQian
+ * 2018/11/26 15:43
  */
 @EqualsAndHashCode(callSuper = true, exclude = {"roles", "groups"})
 @Table(name = "users")
