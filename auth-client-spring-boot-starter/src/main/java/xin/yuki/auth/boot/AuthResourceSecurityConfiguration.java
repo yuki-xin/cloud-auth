@@ -33,8 +33,7 @@ public class AuthResourceSecurityConfiguration extends ResourceServerConfigurerA
 				.antMatchers("/error").permitAll()
 				.anyRequest().authenticated()
 				.and()
-				.headers().frameOptions().disable()
-				.and()
+				.headers().frameOptions().disable().and()
 				.csrf().disable();
 	}
 

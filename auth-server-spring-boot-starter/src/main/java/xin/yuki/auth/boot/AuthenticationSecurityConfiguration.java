@@ -13,7 +13,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
 import xin.yuki.auth.core.mapper.*;
 import xin.yuki.auth.core.service.impl.UserServiceImpl;
-import xin.yuki.auth.server.runner.CreateUserRunner;
 
 /**
  *  AuthorizationSecurityConfig
@@ -33,13 +32,12 @@ public class AuthenticationSecurityConfiguration extends WebSecurityConfigurerAd
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-				.antMatchers("/error", "/oauth/token_key").permitAll()
+				.antMatchers("/error").permitAll()
 				.anyRequest().authenticated()
 				.and()
 				.formLogin().defaultSuccessUrl("/")
 				.and()
-				.headers().frameOptions().disable()
-				.and()
+				.headers().frameOptions().disable().and()
 				.csrf().disable();
 	}
 
@@ -72,9 +70,9 @@ public class AuthenticationSecurityConfiguration extends WebSecurityConfigurerAd
 	}
 
 
-	@Bean
-	public CreateUserRunner createUserRunner(final UserDetailsManager userDetailsService) {
-		return new CreateUserRunner(userDetailsService);
-	}
+//	@Bean
+//	public CreateUserRunner createUserRunner(final UserDetailsManager userDetailsService) {
+//		return new CreateUserRunner(userDetailsService);
+//	}
 
 }

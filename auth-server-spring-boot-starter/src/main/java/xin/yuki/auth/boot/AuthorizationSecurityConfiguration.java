@@ -2,6 +2,7 @@ package xin.yuki.auth.boot;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.boot.autoconfigure.security.oauth2.authserver.AuthorizationServerProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -18,9 +19,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
-import org.springframework.security.oauth2.provider.ClientRegistrationException;
 import org.springframework.security.oauth2.provider.TokenGranter;
 import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.code.JdbcAuthorizationCodeServices;
@@ -50,25 +49,23 @@ import java.util.Collections;
 @Slf4j
 public class AuthorizationSecurityConfiguration extends AuthorizationServerConfigurerAdapter {
 
-	private static final String DEFAULT_FRONT_CLIENT = "auth-front";
-	private static final String DEFAULT_AUTH_MANAGER_CLIENT = "auth-manager";
 	private final AuthenticationManager authenticationManager;
 	private final PasswordEncoder passwordEncoder;
 	private final DataSource dataSource;
 	private final ClientDetailsService clientDetailsService;
-	private final AuthorizationServerProperties authorizationServerProperties;
+
+	@Value("${security.oauth2.authorization.jwt.key-value}")
+	private String keyValue;
 
 	@Autowired
 	public AuthorizationSecurityConfiguration(final AuthenticationConfiguration authenticationConfiguration,
 	                                          final DataSource dataSource,
 	                                          final PasswordEncoder passwordEncoder,
-	                                          final ClientDetailsService clientDetailsService,
-	                                          final AuthorizationServerProperties authorizationServerProperties) throws Exception {
+	                                          final ClientDetailsService clientDetailsService) throws Exception {
 		this.authenticationManager = authenticationConfiguration.getAuthenticationManager();
 		this.passwordEncoder = passwordEncoder;
 		this.dataSource = dataSource;
 		this.clientDetailsService = clientDetailsService;
-		this.authorizationServerProperties = authorizationServerProperties;
 	}
 
 
@@ -77,40 +74,6 @@ public class AuthorizationSecurityConfiguration extends AuthorizationServerConfi
 		//对ClientDetails的配置
 		final JdbcClientDetailsServiceBuilder builder =
 				clients.jdbc(this.dataSource).passwordEncoder(this.passwordEncoder);
-
-
-		//添加auth-front
-		ClientDetails clientDetails = null;
-		try {
-			clientDetails = this.clientDetailsService.loadClientByClientId(DEFAULT_FRONT_CLIENT);
-		} catch (final ClientRegistrationException e) {
-			log.info("Initialize Front Client");
-		}
-		if (clientDetails == null) {
-			builder.withClient(DEFAULT_FRONT_CLIENT).secret(DEFAULT_FRONT_CLIENT)
-					.scopes("all")
-					.authorizedGrantTypes("password,client_credentials".split(","))
-					//两个小时有效
-					.accessTokenValiditySeconds(7200)
-					//一个月有效期
-					.refreshTokenValiditySeconds(2592000);
-		}
-
-		//添加auth-manager
-		try {
-			clientDetails = this.clientDetailsService.loadClientByClientId(DEFAULT_AUTH_MANAGER_CLIENT);
-		} catch (final ClientRegistrationException e) {
-			log.info("Initialize Manager Client");
-		}
-		if (clientDetails == null) {
-			builder.withClient(DEFAULT_AUTH_MANAGER_CLIENT).secret(DEFAULT_AUTH_MANAGER_CLIENT)
-					.scopes("all")
-					.authorizedGrantTypes("client_credentials")
-					//两个小时有效
-					.accessTokenValiditySeconds(7200)
-					//一个月有效期
-					.refreshTokenValiditySeconds(2592000);
-		}
 		builder.build();
 	}
 
@@ -157,14 +120,13 @@ public class AuthorizationSecurityConfiguration extends AuthorizationServerConfi
 
 	@Bean
 	public JwtAccessTokenConverter jwtAccessTokenConverter() {
-		final String keyValue = this.authorizationServerProperties.getJwt().getKeyValue();
-		Assert.notNull(keyValue, "keyValue cannot be null");
+		Assert.notNull(this.keyValue, "keyValue cannot be null");
 		final JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-		if (!keyValue.startsWith("-----BEGIN")) {
-			converter.setSigningKey(keyValue);
+		if (!this.keyValue.startsWith("-----BEGIN")) {
+			converter.setSigningKey(this.keyValue);
 		}
 
-		converter.setVerifierKey(keyValue);
+		converter.setVerifierKey(this.keyValue);
 		return converter;
 	}
 

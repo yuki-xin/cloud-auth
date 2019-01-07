@@ -20,11 +20,8 @@ spring:
   main:
     web-application-type: servlet
     allow-bean-definition-overriding: true
-
-  security:
-    user:
-      name: admin
-      password: admin
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
 
 
 # Auth Server 配置

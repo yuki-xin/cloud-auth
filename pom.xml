@@ -9,7 +9,7 @@
     <name>cloud-auth-spring-boot</name>
     <description>a spring boot starter for cloud auth</description>
     <url>https://github.com/xin-yuki/cloud-auth</url>
-    <version>1.0.0</version>
+    <version>2.0.7.SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <parent>
@@ -24,20 +24,17 @@
         <module>auth-server-spring-boot-starter</module>
         <module>auth-client</module>
         <module>auth-client-spring-boot-starter</module>
-        <module>auth-server-sample</module>
-        <module>auth-manager-sample</module>
+        <!--<module>auth-server-sample</module>-->
+        <!--<module>auth-manager-sample</module>-->
     </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <spring-boot.version>2.1.1.RELEASE</spring-boot.version>
         <commons-collection4.version>4.1</commons-collection4.version>
         <commons-lang3.version>3.4</commons-lang3.version>
-        <hibernate-types.version>2.3.5</hibernate-types.version>
         <fastjson.version>1.2.49</fastjson.version>
-        <mapper.version>2.1.1</mapper.version>
     </properties>
 
 
@@ -57,23 +54,12 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring-boot.version}</version>
+                <version>2.0.7.RELEASE</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <dependency>
-                <groupId>org.springframework.security.oauth.boot</groupId>
-                <artifactId>spring-security-oauth2-autoconfigure</artifactId>
-                <version>${spring-boot.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>tk.mybatis</groupId>
-                <artifactId>mapper-spring-boot-starter</artifactId>
-                <version>${mapper.version}</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
-
     <dependencies>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -97,11 +83,6 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
