@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>auth-manager-spring-boot-starter</artifactId>
+    <version>2.0.7.SNAPSHOT</version>
+
+    <name>auth-manager-spring-boot-starter</name>
+
+    <parent>
+        <groupId>xin.yuki</groupId>
+        <artifactId>cloud-auth-spring-boot</artifactId>
+        <version>2.0.7.SNAPSHOT</version>
+    </parent>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.2</version>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>xin.yuki</groupId>
+            <artifactId>auth-manager</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+</project>

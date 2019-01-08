@@ -6,6 +6,18 @@ spring:
     web-application-type: servlet
     allow-bean-definition-overriding: true
 
+  datasource:
+    hikari:
+      minimum-idle: 2
+      maximum-pool-size: 20
+      pool-name: HikariCP
+      connection-test-query: select 1
+      idle-timeout: 30000
+      connection-timeout: 60000
+    url: jdbc:mysql://localhost:3306/server-sample?useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
+    password: 567711
+
 
 
 

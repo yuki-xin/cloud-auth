@@ -36,7 +36,7 @@ public class CreateUserRunner implements CommandLineRunner {
 			group.addRole(role);
 
 			//保存默认用户
-			final UserModel userDetails = new UserModel(1L, DEFAULT_USER, DEFAULT_PASSWORD, true);
+			final UserModel userDetails = new UserModel(1L, DEFAULT_USER, DEFAULT_PASSWORD, "管理员", true);
 			userDetails.addGroup(group);
 
 			final PermissionModel permission = new PermissionModel();

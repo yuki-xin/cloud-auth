@@ -12,7 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
 import xin.yuki.auth.core.mapper.*;
-import xin.yuki.auth.core.service.impl.UserServiceImpl;
+import xin.yuki.auth.core.service.impl.UserDetailServiceImpl;
 
 /**
  *  AuthorizationSecurityConfig
@@ -65,7 +65,8 @@ public class AuthenticationSecurityConfiguration extends WebSecurityConfigurerAd
 	                                             final UserRoleMapper userRoleDao, final GroupRoleMapper groupRoleDao,
 	                                             final RoleMapper roleDao, final PermissionMapper permissionDao,
 	                                             final RolePermissionMapper rolePermissionDao) throws Exception {
-		return new UserServiceImpl(this.authenticationManager(), passwordEncoder, userDao, groupDao, userGroupDao,
+		return new UserDetailServiceImpl(this.authenticationManager(), passwordEncoder, userDao, groupDao,
+				userGroupDao,
 				userRoleDao, groupRoleDao, roleDao, permissionDao, rolePermissionDao);
 	}
 

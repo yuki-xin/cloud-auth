@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.Column;
@@ -16,7 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- *  UserEntity
+ * UserEntity
  *
  * @author ZQian
  * 2018/11/26 15:43
@@ -49,15 +50,19 @@ public class UserModel extends BaseModel implements UserDetails {
 	 */
 	@Transient
 	private final List<UserGroupRel> userGroup = new ArrayList<>();
+
 	private String username;
+	private String name;
 	private String password;
 	@Column(name = "enabled")
 	private Boolean active;
 
-	public UserModel(final Long id, final String username, final String password, final boolean enabled) {
+	public UserModel(final Long id, final String username, final String password, final String name,
+	                 final boolean enabled) {
 		this.setId(id);
 		this.username = username;
 		this.password = password;
+		this.name = name;
 		this.active = enabled;
 	}
 
@@ -69,7 +74,11 @@ public class UserModel extends BaseModel implements UserDetails {
 		final Collection<RoleModel> allRoles = CollectionUtils.union(CollectionUtils.emptyIfNull(this.getRoles()),
 				groupRoles);
 
-		return allRoles.stream().flatMap(role -> role.getPermissions().stream()).collect(Collectors.toList());
+		final List<GrantedAuthority> premissions =
+				allRoles.stream().flatMap(role -> role.getPermissions().stream()).collect(Collectors.toList());
+		final List<SimpleGrantedAuthority> roles =
+				allRoles.stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName().toUpperCase())).collect(Collectors.toList());
+		return CollectionUtils.union(premissions, roles);
 	}
 
 	@Override

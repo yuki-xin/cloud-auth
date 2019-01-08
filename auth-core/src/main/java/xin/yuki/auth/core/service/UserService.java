@@ -1,6 +1,9 @@
 package xin.yuki.auth.core.service;
 
-import org.springframework.security.provisioning.UserDetailsManager;
+import xin.yuki.auth.core.entity.UserModel;
 
-public interface UserService extends UserDetailsManager {
+public interface UserService {
+
+	UserModel findByUsername(String username);
+
 }

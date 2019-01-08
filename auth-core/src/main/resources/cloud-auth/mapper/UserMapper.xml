@@ -3,12 +3,14 @@
 <mapper namespace="xin.yuki.auth.core.mapper.UserMapper">
     <sql id="Base_Column_List">
         u.username,
+        u.name,
         u.password,
         u.enabled,
         u.id
     </sql>
     <resultMap id="BaseResultMap" type="xin.yuki.auth.core.entity.UserModel">
         <result column="username" property="username"/>
+        <result column="name" property="name"/>
         <result column="password" property="password"/>
         <result column="enabled" property="active"/>
         <result column="id" property="id"/>
@@ -39,6 +41,14 @@
         from users u
         where 1=1
         and u.username=#{username}
+    </select>
+    <select id="findOneByUsernameAndEnabled" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from users u
+        where 1=1
+        and u.username=#{username}
+        and u.enabled=#{enabled}
     </select>
 
     <select id="findByGroupId" resultMap="BaseResultMap">
