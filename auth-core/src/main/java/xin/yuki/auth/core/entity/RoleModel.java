@@ -3,11 +3,14 @@ package xin.yuki.auth.core.entity;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import tk.mybatis.mapper.annotation.ColumnType;
+import xin.yuki.auth.core.type.handler.JSONTypeHandler;
 
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author zhang
@@ -40,6 +43,9 @@ public class RoleModel extends BaseModel {
 	 */
 	@Transient
 	private List<RolePermissionRel> rolePermission = new ArrayList<>();
+
+	@ColumnType(typeHandler = JSONTypeHandler.class)
+	private Map<String, Object> additionalInformation;
 
 	public void addPermission(final PermissionModel permission) {
 		this.permissions.add(permission);

@@ -12,9 +12,8 @@ public interface UserMapper extends BaseListMapper<UserModel> {
 
 	UserModel findOneByUsername(@Param("username") String username);
 
-	UserModel findByGroupId(@Param("groupId") String groupId);
+//	UserModel findByGroupId(@Param("groupId") String groupId);
 
-	UserModel findByRoleId(@Param("roleId") String roleId);
+//	UserModel findByRoleId(@Param("roleId") String roleId);
 
-	UserModel findOneByUsernameAndEnabled(@Param("username") String username, @Param("enabled") Boolean enabled);
 }

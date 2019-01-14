@@ -3,11 +3,14 @@ package xin.yuki.auth.core.entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import tk.mybatis.mapper.annotation.ColumnType;
+import xin.yuki.auth.core.type.handler.JSONTypeHandler;
 
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  *  GroupEntity
@@ -32,6 +35,8 @@ public class GroupModel extends BaseModel {
 
 	private String name;
 	private String description;
+	@ColumnType(typeHandler = JSONTypeHandler.class)
+	private Map<String, Object> additionalInformation;
 
 	public void addRole(final RoleModel role) {
 		this.roles.add(role);

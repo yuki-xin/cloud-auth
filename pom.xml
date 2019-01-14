@@ -20,10 +20,10 @@
 
     <modules>
         <module>auth-core</module>
-        <module>auth-server</module>
-        <module>auth-server-spring-boot-starter</module>
-        <module>auth-client</module>
-        <module>auth-client-spring-boot-starter</module>
+        <!--<module>auth-server</module>-->
+        <!--<module>auth-server-spring-boot-starter</module>-->
+        <!--<module>auth-client</module>-->
+        <!--<module>auth-client-spring-boot-starter</module>-->
         <module>auth-manager</module>
         <module>auth-manager-spring-boot-starter</module>
         <!--<module>auth-server-sample</module>-->

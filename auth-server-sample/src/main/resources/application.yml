@@ -30,3 +30,4 @@ security:
     authorization:
       jwt:
         key-value: admin
+

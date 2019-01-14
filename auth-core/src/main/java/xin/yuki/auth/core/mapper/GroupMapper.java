@@ -13,7 +13,4 @@ public interface GroupMapper extends BaseListMapper<GroupModel> {
 
 	List<GroupModel> findByUserId(@Param("userId") Long userId);
 
-	List<GroupModel> findByRoleId(@Param("roleId") Long roleId);
-
-
 }

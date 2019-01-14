@@ -7,6 +7,8 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import tk.mybatis.mapper.annotation.ColumnType;
+import xin.yuki.auth.core.type.handler.JSONTypeHandler;
 
 import javax.persistence.Column;
 import javax.persistence.Table;
@@ -14,6 +16,7 @@ import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -56,6 +59,14 @@ public class UserModel extends BaseModel implements UserDetails {
 	private String password;
 	@Column(name = "enabled")
 	private Boolean active;
+
+	private String mobileNumber;
+	private String email;
+
+	@ColumnType(typeHandler = JSONTypeHandler.class)
+	private Map<String, Object> additionalInformation;
+
+
 
 	public UserModel(final Long id, final String username, final String password, final String name,
 	                 final boolean enabled) {

@@ -2,18 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="xin.yuki.auth.core.mapper.UserMapper">
     <sql id="Base_Column_List">
-        u.username,
-        u.name,
-        u.password,
-        u.enabled,
-        u.id
+               u.username,
+               u.name,
+               u.password,
+               u.enabled,
+               u.mobile_number,
+               u.email,
+               u.additional_information,
+               u.id
     </sql>
     <resultMap id="BaseResultMap" type="xin.yuki.auth.core.entity.UserModel">
+        <result column="id" property="id"/>
         <result column="username" property="username"/>
         <result column="name" property="name"/>
         <result column="password" property="password"/>
         <result column="enabled" property="active"/>
-        <result column="id" property="id"/>
+        <result column="mobile_number" property="mobileNumber"/>
+        <result column="email" property="email"/>
+        <result column="additional_information" property="additionalInformation"
+                typeHandler="xin.yuki.auth.core.type.handler.JSONTypeHandler"/>
+        <result column="version" property="version"/>
     </resultMap>
 
     <resultMap id="GroupResultMap" type="xin.yuki.auth.core.entity.UserModel" extends="BaseResultMap">
@@ -42,32 +50,24 @@
         where 1=1
         and u.username=#{username}
     </select>
-    <select id="findOneByUsernameAndEnabled" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from users u
-        where 1=1
-        and u.username=#{username}
-        and u.enabled=#{enabled}
-    </select>
 
-    <select id="findByGroupId" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from users u
-        left join users_groups ug on u.id=ug.user_id
-        left join groups g on g.id=ug.group_id
-        where g.id=#{groupId}
-    </select>
+    <!--<select id="findByGroupId" resultMap="BaseResultMap">-->
+    <!--select-->
+    <!--<include refid="Base_Column_List"/>-->
+    <!--from users u-->
+    <!--left join users_groups ug on u.id=ug.user_id-->
+    <!--left join groups g on g.id=ug.group_id-->
+    <!--where g.id=#{groupId}-->
+    <!--</select>-->
 
-    <select id="findByRoleId" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from users u
-        left join users_roles ur on u.id=ur.user_id
-        left join roles r on r.id=ur.role_id
-        where r.id=#{roleId}
-    </select>
+    <!--<select id="findByRoleId" resultMap="BaseResultMap">-->
+    <!--select-->
+    <!--<include refid="Base_Column_List"/>-->
+    <!--from users u-->
+    <!--left join users_roles ur on u.id=ur.user_id-->
+    <!--left join roles r on r.id=ur.role_id-->
+    <!--where r.id=#{roleId}-->
+    <!--</select>-->
 
 
 </mapper>

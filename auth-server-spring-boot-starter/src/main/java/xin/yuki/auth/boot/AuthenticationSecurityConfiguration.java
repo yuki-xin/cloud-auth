@@ -8,11 +8,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.UserDetailsManager;
-import xin.yuki.auth.core.mapper.*;
-import xin.yuki.auth.core.service.impl.UserDetailServiceImpl;
+import xin.yuki.auth.core.mapper.UserMapper;
+import xin.yuki.auth.core.service.impl.UserDetailsServiceImpl;
 
 /**
  *  AuthorizationSecurityConfig
@@ -59,15 +59,8 @@ public class AuthenticationSecurityConfiguration extends WebSecurityConfigurerAd
 
 
 	@Bean
-	public UserDetailsManager userDetailsService(final PasswordEncoder passwordEncoder,
-	                                             final UserMapper userDao,
-	                                             final GroupMapper groupDao, final UserGroupMapper userGroupDao,
-	                                             final UserRoleMapper userRoleDao, final GroupRoleMapper groupRoleDao,
-	                                             final RoleMapper roleDao, final PermissionMapper permissionDao,
-	                                             final RolePermissionMapper rolePermissionDao) throws Exception {
-		return new UserDetailServiceImpl(this.authenticationManager(), passwordEncoder, userDao, groupDao,
-				userGroupDao,
-				userRoleDao, groupRoleDao, roleDao, permissionDao, rolePermissionDao);
+	public UserDetailsService userDetailsService(final UserMapper userMapper) throws Exception {
+		return new UserDetailsServiceImpl(userMapper);
 	}
 
 

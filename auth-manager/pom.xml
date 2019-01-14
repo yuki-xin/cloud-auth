@@ -4,12 +4,12 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>auth-core</artifactId>
+  <artifactId>auth-manager</artifactId>
   <version>2.0.7.SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>auth-core</name>
-  <description>Auth Core</description>
+  <name>auth-manager</name>
+  <description>Auth Manager</description>
 
   <parent>
     <groupId>xin.yuki</groupId>
@@ -17,7 +17,9 @@
     <version>2.0.7.SNAPSHOT</version>
   </parent>
 
+
   <dependencies>
+
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
@@ -25,24 +27,26 @@
       <optional>true</optional>
     </dependency>
 
+
     <dependency>
-      <groupId>tk.mybatis</groupId>
-      <artifactId>mapper-spring-boot-starter</artifactId>
-      <version>2.1.1</version>
+      <groupId>xin.yuki</groupId>
+      <artifactId>auth-client</artifactId>
+      <version>${project.version}</version>
     </dependency>
 
     <dependency>
-      <groupId>com.github.pagehelper</groupId>
-      <artifactId>pagehelper-spring-boot-starter</artifactId>
-      <version>1.2.10</version>
+      <groupId>xin.yuki</groupId>
+      <artifactId>auth-core</artifactId>
+      <version>${project.version}</version>
     </dependency>
 
     <dependency>
-      <groupId>org.springframework.security.oauth.boot</groupId>
-      <artifactId>spring-security-oauth2-autoconfigure</artifactId>
-      <version>2.0.7.RELEASE</version>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>3.1.0</version>
+      <scope>provided</scope>
     </dependency>
+
 
   </dependencies>
-
 </project>
