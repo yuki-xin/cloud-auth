@@ -3,10 +3,7 @@ package xin.yuki.auth.manager.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import xin.yuki.auth.core.mapper.GroupMapper;
-import xin.yuki.auth.core.mapper.PermissionMapper;
-import xin.yuki.auth.core.mapper.RoleMapper;
-import xin.yuki.auth.core.mapper.UserMapper;
+import xin.yuki.auth.core.mapper.*;
 import xin.yuki.auth.core.service.GroupService;
 import xin.yuki.auth.core.service.PermissionService;
 import xin.yuki.auth.core.service.RoleService;
@@ -24,13 +21,13 @@ public class AuthManagerConfiguration {
 	}
 
 	@Bean
-	public GroupService groupService(final GroupMapper groupMapper) {
-		return new GroupServiceImpl(groupMapper);
+	public GroupService groupService(final GroupMapper groupMapper, final UserGroupMapper userGroupMapper) {
+		return new GroupServiceImpl(groupMapper, userGroupMapper);
 	}
 
 	@Bean
-	public RoleService roleService(final RoleMapper roleMapper) {
-		return new RoleServiceImpl(roleMapper);
+	public RoleService roleService(final RoleMapper roleMapper, final UserRoleMapper userRoleMapper) {
+		return new RoleServiceImpl(roleMapper, userRoleMapper);
 	}
 
 	@Bean

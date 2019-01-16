@@ -31,6 +31,7 @@ public class RoleModel extends BaseModel {
 	 */
 	@Transient
 	private List<GroupModel> groups = new ArrayList<>();
+	private String code;
 	private String name;
 	private String description;
 	/**

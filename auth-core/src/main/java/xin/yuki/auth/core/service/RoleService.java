@@ -9,4 +9,8 @@ public interface RoleService {
 	List<RoleModel> findGroupRoles(Long groupId);
 
 	List<RoleModel> findUserRoles(Long userId);
+
+	List<RoleModel> findAll();
+
+	void changeUserRoles(Long userId, List<Long> roleIds);
 }

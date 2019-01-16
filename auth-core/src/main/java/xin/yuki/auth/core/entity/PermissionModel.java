@@ -23,6 +23,7 @@ public class PermissionModel extends BaseModel implements GrantedAuthority {
 
 	private static final long serialVersionUID = -812812513295029240L;
 
+	private String code;
 	private String name;
 	private String description;
 

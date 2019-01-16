@@ -33,6 +33,7 @@ public class GroupModel extends BaseModel {
 	@Transient
 	private final List<GroupRoleRel> groupRole = new ArrayList<>();
 
+	private String code;
 	private String name;
 	private String description;
 	@ColumnType(typeHandler = JSONTypeHandler.class)

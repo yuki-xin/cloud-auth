@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="xin.yuki.auth.core.mapper.RoleMapper">
     <sql id="Base_Column_List">
+               r.code,
                r.name,
                r.description,
                r.id,
@@ -10,6 +11,7 @@
     </sql>
 
     <resultMap id="BaseResultMap" type="xin.yuki.auth.core.entity.RoleModel">
+        <result column="code" property="code"/>
         <result column="name" property="name"/>
         <result column="description" property="description"/>
         <result column="id" property="id"/>

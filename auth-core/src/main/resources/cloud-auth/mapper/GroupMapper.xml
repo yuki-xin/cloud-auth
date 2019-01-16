@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="xin.yuki.auth.core.mapper.GroupMapper">
     <sql id="Base_Column_List">
+               g.code,
                g.name,
                g.description,
                g.id,
@@ -11,6 +12,7 @@
 
     <resultMap id="BaseResultMap" type="xin.yuki.auth.core.entity.GroupModel">
         <result column="id" property="id"/>
+        <result column="code" property="code"/>
         <result column="name" property="name"/>
         <result column="description" property="description"/>
         <result column="version" property="version"/>

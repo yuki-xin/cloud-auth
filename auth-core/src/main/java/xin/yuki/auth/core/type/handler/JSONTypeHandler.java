@@ -41,4 +41,5 @@ public class JSONTypeHandler extends BaseTypeHandler<Map> {
 		}
 		return JSON.parseObject(json).getInnerMap();
 	}
+
 }
