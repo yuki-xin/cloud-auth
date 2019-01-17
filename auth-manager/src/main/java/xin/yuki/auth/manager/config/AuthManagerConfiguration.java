@@ -21,13 +21,15 @@ public class AuthManagerConfiguration {
 	}
 
 	@Bean
-	public GroupService groupService(final GroupMapper groupMapper, final UserGroupMapper userGroupMapper) {
-		return new GroupServiceImpl(groupMapper, userGroupMapper);
+	public GroupService groupService(final GroupMapper groupMapper, final UserGroupMapper userGroupMapper,
+	                                 final GroupRoleMapper groupRoleMapper) {
+		return new GroupServiceImpl(groupMapper, userGroupMapper, groupRoleMapper);
 	}
 
 	@Bean
-	public RoleService roleService(final RoleMapper roleMapper, final UserRoleMapper userRoleMapper) {
-		return new RoleServiceImpl(roleMapper, userRoleMapper);
+	public RoleService roleService(final RoleMapper roleMapper, final UserRoleMapper userRoleMapper,
+	                               final GroupRoleMapper groupRoleMapper) {
+		return new RoleServiceImpl(roleMapper, userRoleMapper, groupRoleMapper);
 	}
 
 	@Bean

@@ -1,11 +1,13 @@
 package xin.yuki.auth.core.service.impl;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.util.Sqls;
+import xin.yuki.auth.core.entity.GroupRoleRel;
 import xin.yuki.auth.core.entity.RoleModel;
-import xin.yuki.auth.core.entity.UserGroupRel;
 import xin.yuki.auth.core.entity.UserRoleRel;
+import xin.yuki.auth.core.mapper.GroupRoleMapper;
 import xin.yuki.auth.core.mapper.RoleMapper;
 import xin.yuki.auth.core.mapper.UserRoleMapper;
 import xin.yuki.auth.core.service.RoleService;
@@ -19,9 +21,13 @@ public class RoleServiceImpl implements RoleService {
 
 	private final UserRoleMapper userRoleMapper;
 
-	public RoleServiceImpl(final RoleMapper roleMapper, final UserRoleMapper userRoleMapper) {
+	private final GroupRoleMapper groupRoleMapper;
+
+	public RoleServiceImpl(final RoleMapper roleMapper, final UserRoleMapper userRoleMapper,
+	                       final GroupRoleMapper groupRoleMapper) {
 		this.roleMapper = roleMapper;
 		this.userRoleMapper = userRoleMapper;
+		this.groupRoleMapper = groupRoleMapper;
 	}
 
 	@Override
@@ -40,8 +46,9 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public void changeUserRoles(final Long userId, final List<Long> roleIds) {
-		final Example.Builder delete = Example.builder(UserGroupRel.class);
+		final Example.Builder delete = Example.builder(UserRoleRel.class);
 		delete.where(Sqls.custom().andEqualTo("userId", userId));
 		this.userRoleMapper.deleteByExample(delete.build());
 
@@ -53,6 +60,24 @@ public class RoleServiceImpl implements RoleService {
 		}).collect(Collectors.toList());
 		if (CollectionUtils.isNotEmpty(rels)) {
 			this.userRoleMapper.insertList(rels);
+		}
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void changeGroupRoles(final Long groupId, final List<Long> roleIds) {
+		final Example.Builder delete = Example.builder(GroupRoleRel.class);
+		delete.where(Sqls.custom().andEqualTo("groupId", groupId));
+		this.groupRoleMapper.deleteByExample(delete.build());
+
+		final List<GroupRoleRel> rels = roleIds.stream().map(rid -> {
+			GroupRoleRel userRoleRel = new GroupRoleRel();
+			userRoleRel.setGroupId(groupId);
+			userRoleRel.setRoleId(rid);
+			return userRoleRel;
+		}).collect(Collectors.toList());
+		if (CollectionUtils.isNotEmpty(rels)) {
+			this.groupRoleMapper.insertList(rels);
 		}
 	}
 }

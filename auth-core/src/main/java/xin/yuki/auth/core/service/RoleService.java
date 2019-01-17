@@ -13,4 +13,6 @@ public interface RoleService {
 	List<RoleModel> findAll();
 
 	void changeUserRoles(Long userId, List<Long> roleIds);
+
+	void changeGroupRoles(Long groupId, List<Long> roleIds);
 }
