@@ -8,12 +8,22 @@ import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import tk.mybatis.mapper.autoconfigure.ConfigurationCustomizer;
 import tk.mybatis.mapper.autoconfigure.MybatisProperties;
 import tk.mybatis.mapper.autoconfigure.SpringBootVFS;
+import xin.yuki.auth.core.mapper.*;
+import xin.yuki.auth.core.service.GroupService;
+import xin.yuki.auth.core.service.PermissionService;
+import xin.yuki.auth.core.service.RoleService;
+import xin.yuki.auth.core.service.UserService;
+import xin.yuki.auth.core.service.impl.GroupServiceImpl;
+import xin.yuki.auth.core.service.impl.PermissionServiceImpl;
+import xin.yuki.auth.core.service.impl.RoleServiceImpl;
+import xin.yuki.auth.core.service.impl.UserServiceImpl;
 
 import javax.sql.DataSource;
 import java.util.ArrayList;
@@ -105,5 +115,31 @@ public class CloudAuthConfiguration {
 		return factory.getObject();
 	}
 
+
+	@Bean
+	public UserService userService(final UserMapper userMapper, final PasswordEncoder passwordEncoder,
+	                               final GroupService groupService, final RoleService roleService,
+	                               final PermissionService permissionService) {
+		return new UserServiceImpl(userMapper, passwordEncoder, groupService, roleService, permissionService);
+	}
+
+	@Bean
+	public GroupService groupService(final GroupMapper groupMapper, final UserGroupMapper userGroupMapper,
+	                                 final GroupRoleMapper groupRoleMapper) {
+		return new GroupServiceImpl(groupMapper, userGroupMapper, groupRoleMapper);
+	}
+
+	@Bean
+	public RoleService roleService(final RoleMapper roleMapper, final UserRoleMapper userRoleMapper,
+	                               final GroupRoleMapper groupRoleMapper,
+	                               final RolePermissionMapper rolePermissionMapper,
+	                               final RoleRelMapper roleRelMapper) {
+		return new RoleServiceImpl(roleMapper, userRoleMapper, groupRoleMapper, rolePermissionMapper, roleRelMapper);
+	}
+
+	@Bean
+	public PermissionService permissionService(final PermissionMapper permissionMapper) {
+		return new PermissionServiceImpl(permissionMapper);
+	}
 
 }

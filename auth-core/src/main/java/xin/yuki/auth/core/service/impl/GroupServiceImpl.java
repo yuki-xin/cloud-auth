@@ -88,9 +88,15 @@ public class GroupServiceImpl implements GroupService {
 		if (result == 0) {
 			throw new GroupException("删除失败！");
 		}
+		//删除group与role的绑定
 		final GroupRoleRel groupRoleRel = new GroupRoleRel();
 		groupRoleRel.setGroupId(id);
 		this.groupRoleMapper.delete(groupRoleRel);
+
+		//删除user与group的绑定
+		final UserGroupRel userGroupRel = new UserGroupRel();
+		userGroupRel.setGroupId(id);
+		this.userGroupMapper.delete(userGroupRel);
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package xin.yuki.auth.core.service;
 
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import xin.yuki.auth.core.entity.UserModel;
 import xin.yuki.auth.core.exception.UserException;
 
@@ -24,4 +25,6 @@ public interface UserService {
 	void enableUser(String username, Boolean enable);
 
 	UserModel createUser(UserModel user);
+
+	UserModel userDetailsInfo(String username) throws UsernameNotFoundException;
 }

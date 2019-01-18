@@ -26,7 +26,13 @@
 
         <dependency>
             <groupId>xin.yuki</groupId>
-            <artifactId>auth-manager</artifactId>
+            <artifactId>auth-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>xin.yuki</groupId>
+            <artifactId>auth-client</artifactId>
             <version>${project.version}</version>
         </dependency>
 

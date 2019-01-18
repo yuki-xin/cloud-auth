@@ -11,7 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import xin.yuki.auth.core.mapper.UserMapper;
+import xin.yuki.auth.core.service.UserService;
 import xin.yuki.auth.core.service.impl.UserDetailsServiceImpl;
 
 /**
@@ -59,8 +59,8 @@ public class AuthenticationSecurityConfiguration extends WebSecurityConfigurerAd
 
 
 	@Bean
-	public UserDetailsService userDetailsService(final UserMapper userMapper) throws Exception {
-		return new UserDetailsServiceImpl(userMapper);
+	public UserDetailsService userDetailsService(final UserService userService) throws Exception {
+		return new UserDetailsServiceImpl(userService);
 	}
 
 

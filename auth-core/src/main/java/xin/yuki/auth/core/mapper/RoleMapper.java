@@ -15,5 +15,10 @@ public interface RoleMapper extends BaseListMapper<RoleModel> {
 
 	List<RoleModel> findByGroupId(@Param("groupId") Long groupId);
 
+	List<RoleModel> findParentById(@Param("id") Long id);
+
+	List<RoleModel> findChildrenById(@Param("id") Long id);
+
+
 
 }

@@ -3,7 +3,6 @@ package xin.yuki.auth.core.entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -34,25 +33,30 @@ public class UserModel extends BaseModel implements UserDetails {
 
 	private static final long serialVersionUID = 5407560146864572541L;
 	/**
-	 * 查询用的组
+	 * 组
 	 */
 	@Transient
-	private final List<GroupModel> groups = new ArrayList<>();
+	private List<GroupModel> groups = new ArrayList<>();
 	/**
-	 * 查询用的角色
+	 * 角色
 	 */
 	@Transient
-	private final List<RoleModel> roles = new ArrayList<>();
+	private List<RoleModel> roles = new ArrayList<>();
+	/**
+	 * 权限
+	 */
+	@Transient
+	private List<PermissionModel> permissions = new ArrayList<>();
 	/**
 	 * 保存用的角色关系
 	 */
 	@Transient
-	private final List<UserRoleRel> userRole = new ArrayList<>();
+	private List<UserRoleRel> userRole = new ArrayList<>();
 	/**
 	 * 保存用的组关系
 	 */
 	@Transient
-	private final List<UserGroupRel> userGroup = new ArrayList<>();
+	private List<UserGroupRel> userGroup = new ArrayList<>();
 
 	private String username;
 	private String name;
@@ -67,7 +71,6 @@ public class UserModel extends BaseModel implements UserDetails {
 	private Map<String, Object> additionalInformation;
 
 
-
 	public UserModel(final Long id, final String username, final String password, final String name,
 	                 final boolean enabled) {
 		this.setId(id);
@@ -80,16 +83,9 @@ public class UserModel extends BaseModel implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		final Collection<RoleModel> groupRoles =
-				CollectionUtils.emptyIfNull(this.getGroups()).stream().flatMap(g -> g.getRoles().stream()).collect(Collectors.toList());
-		final Collection<RoleModel> allRoles = CollectionUtils.union(CollectionUtils.emptyIfNull(this.getRoles()),
-				groupRoles);
-
-		final List<GrantedAuthority> premissions =
-				allRoles.stream().flatMap(role -> role.getPermissions().stream()).collect(Collectors.toList());
-		final List<SimpleGrantedAuthority> roles =
-				allRoles.stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName().toUpperCase())).collect(Collectors.toList());
-		return CollectionUtils.union(premissions, roles);
+		final List<GrantedAuthority> permissions =
+				this.getPermissions().stream().map(per -> new SimpleGrantedAuthority(per.getName())).collect(Collectors.toList());
+		return permissions;
 	}
 
 	@Override
